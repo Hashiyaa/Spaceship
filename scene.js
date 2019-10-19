@@ -49,9 +49,6 @@ function LoadScene() {
     function draw() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
-        context.beginPath();
-        context.arc(73+posX, posY, 5, 0, Math.PI * 2, false);
-        context.fill();
 
         generationCount++;
         // update the position
@@ -77,9 +74,13 @@ function LoadScene() {
                 g.setY(g.getY()+g.getVelocity());
             }
         }
+        context.beginPath();
+        context.arc(73 + posX, posY + 30, 5, 0, Math.PI * 2, false);
+        context.fill();
         context.restore();
+
+        detectCollision(); // check for collision between spaceship and garbage constantly
         window.requestAnimationFrame(draw);
-        window.requestAnimationFrame(detectCollision); // check for collision between spaceship and garbage constantly
     }
     draw();
 
@@ -150,7 +151,7 @@ function LoadScene() {
 
     function distanceToShip(x, y) {
         
-        return Math.sqrt(Math.pow(73 + posX - x, 2) + Math.pow(posY - y, 2));
+        return Math.sqrt(Math.pow(73 + posX - x, 2) + Math.pow(posY + 30 - y, 2));
     }
 
     window.onkeydown = function(event) {
