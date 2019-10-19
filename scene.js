@@ -8,6 +8,11 @@ let speed = 10;
 let generationCount = 100;
 let ship_Width = -1;
 
+let collector_Types = ['household_food_waste','residual_waste','recyclable_waste','hazardous_waste'];
+let currIndex = 0;
+let currType = collector_Types[0];
+
+
 let garbageList = [];
 let household_food_waste = ['apple','bone','cheese','fish','watermelon'];
 let residual_waste = ['cup'];
@@ -140,7 +145,8 @@ function LoadScene() {
         var i;
         for (i = 0; i < garbageList.length; i++) {
             // let gbgX = garbageList[i].getX() + garbageList[i].
-            if (distanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 20) {
+            let currGbg = garbageList[i];
+            if (distanceToShip(currGbg.getX(), currGbg.getY()) < 20 && currGbg.type === currType) {
                 garbageList.splice(i, 1); // remove garbage from canvas
                 // delete garbageList[i];
                 // concurrent modification?
@@ -157,6 +163,11 @@ function LoadScene() {
     window.onkeydown = function(event) {
         var keyPr = event.keyCode; //Key code of key pressed
       
+        if (keyPr === 32) {
+            currIndex = ((currIndex + 1) % 4);
+            currType = collector_Types[currIndex];
+        }
+
         if(keyPr === 39 || keyPr === 68) {  
             dirX = 1; //right arrow add 20 from current
         }
