@@ -1,3 +1,4 @@
+let collector_Types = ['household_food_waste','residual_waste','recyclable_waste','hazardous_waste'];
 class spaceship extends FlyingObject {
     constructor(x, y){
         this.x = x;
@@ -12,11 +13,11 @@ class spaceship extends FlyingObject {
         return this.y;
     }
 
-    setType(t) {
-        this.type = t;
+    setCollectorType(t) {
+        this.type = collector_Types[t];
     }
 
-    getType() {
+    getCollectorType() {
         return this.type;
     }
 
