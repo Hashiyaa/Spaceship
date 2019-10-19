@@ -6,7 +6,6 @@ let dirX = 0;
 let dirY = 0;
 let speed = 10;
 let generationCount = 100;
-let ship_Width = -1;
 
 let garbageList = [];
 let household_food_waste = ['apple','bone','cheese','fish','watermelon'];
@@ -24,15 +23,31 @@ function LoadScene() {
     let context = canvas.getContext("2d");
     // let i = this.performance.now();
 
-    let img = new Image(); // Create new img element
-    img.src = 'images/spaceship.png'; // Set source path
-
     function ButtonDisappear(){
         document.getElementById("StartButton").remove();
         document.getElementById("SettingButton").remove();
     }
     ButtonDisappear();
 
+    function LoadEnergy(){
+        context.save();
+        let energy = document.createElement("progress");
+        let energypic = document.createElement("img");
+
+        energypic.src = "images/energy.png";
+
+        energypic.setAttribute("id","Energy_Img");
+        energy.setAttribute("id","Energy");
+
+        energy.max = 100;
+        energy.value = 50;
+
+        MainFrame.appendChild(energypic);
+        MainFrame.appendChild(energy);
+        
+        context.restore();
+    }
+    LoadEnergy();
     garbage_types.push(household_food_waste);
     garbage_types.push(residual_waste);
     garbage_types.push(recyclable_waste);
@@ -41,18 +56,19 @@ function LoadScene() {
     function draw() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
+        context.fillRect(0, 0, 50, 50);
 
         generationCount++;
+
         // update the position
-        if ((posX >= 0 && dirX < 0) || (posX <= 600 - img.width && dirX > 0)) {
+        if ((posX >= 100 && dirX < 0) || (posX <= 500 && dirX > 0)) {
             posX += dirX * speed;
         }
-        if ((posY >= 0 && dirY < 0) || (posY <= 600 - img.height && dirY > 0)) {
+        if ((posY >= 100 && dirY < 0) || (posY <= 500 && dirY > 0)) {
             posY += dirY * speed;
         }
         // console.log("x: " + posX + " y: " + posY);
-        
-        drawSpaceship(posX, posY, img);
+        drawSpaceship(posX, posY);
         if(generationCount>=generationRate){
             generate_garbage();
             generationCount = 0;
@@ -60,7 +76,7 @@ function LoadScene() {
         draw_garbage();
         for(let i=0;i<garbageList.length;i++){
             let g = garbageList[i];
-            if(g.getY()>600 + g.getHeight()){
+            if(g.getY()>600+g.getY()){
                 garbageList.splice(i,1);
             }else{
                 g.setY(g.getY()+g.getVelocity());
@@ -72,14 +88,12 @@ function LoadScene() {
     }
     draw();
 
-    function drawSpaceship(x, y, img) {
+    function drawSpaceship(x, y) {
+        let img = new Image(); // Create new img element
+        img.src = 'images/spaceship.png'; // Set source path
         context.save();
         // context.translate(-100, -100); // hard code
-
-
-        ship_Width = img.width;
-        console.log(img.width);
-        context.drawImage(img, x, y);        
+        context.drawImage(img, x, y);
         // img.onload = function() {
         //     context.drawImage(img, 100, 100);
         // };
@@ -122,7 +136,7 @@ function LoadScene() {
             let name = g.getName();
             let img = new Image();
             img.src = "images/" + name + ".png";
-            context.drawImage(img,g.getX()-g.getWidth()/2,g.getY()-img.height*3/2);
+            context.drawImage(img,g.getX(),g.getY()-img.height);
         }
         context.restore();
     }
@@ -130,8 +144,7 @@ function LoadScene() {
     function detectCollision() {
         var i;
         for (i = 0; i < garbageList.length; i++) {
-            // let gbgX = garbageList[i].getX() + garbageList[i].
-            if (distanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 30) {
+            if (distanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 100) {
                 garbageList.splice(i, 1); // remove garbage from canvas
                 // delete garbageList[i];
                 // concurrent modification?
@@ -141,7 +154,7 @@ function LoadScene() {
     }
 
     function distanceToShip(x, y) {
-        return Math.sqrt(Math.pow(57 + posX - x, 2) + Math.pow(posY - y, 2));
+        return Math.sqrt(Math.pow(posX - x, 2)+ Math.pow(posY - y, 2));
     }
 
     window.onkeydown = function(event) {
@@ -195,3 +208,9 @@ window.onload = function(){
 function Settings(){
 
 }
+
+function gameover(){
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.save();
+}
+
