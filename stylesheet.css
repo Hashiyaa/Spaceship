@@ -44,12 +44,7 @@ Button{
 #Energy{
     position: absolute;
     height: 10px;
-    width:240px;
-    left: 41.9%;
+    width:300px;
+    left: 42%;
     transform:translate(-50%,-590px);
-}
-
-#Energy_Img{
-    position: absolute;
-    left: 40%;
 }
