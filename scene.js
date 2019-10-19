@@ -112,16 +112,16 @@ function LoadScene() {
     window.onkeydown = function(event) {
         var keyPr = event.keyCode; //Key code of key pressed
       
-        if(keyPr === 39 || keyPr === 68){  
+        if(keyPr === 39 || keyPr === 68) {  
             dirX = 1; //right arrow add 20 from current
         }
-        else if(keyPr === 37 || keyPr === 65){
+        else if(keyPr === 37 || keyPr === 65) {
             dirX = -1; //left arrow subtract 20 from current
         }
         else if(keyPr === 38  || keyPr === 87) {
             dirY = -1; //top arrow subtract 20 from current
         }
-        else if(keyPr === 40 || keyPr === 83){
+        else if(keyPr === 40 || keyPr === 83) {
             dirY = 1; //bottom arrow add 20 from current
         }
     };
