@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 window.onload = function () {
 	let canvas = /** @type {HTMLCanvasElement} */ ( document.getElementById( "canvas" ) );
 	let context = canvas.getContext( "2d" );
@@ -36,6 +37,30 @@ class spaceship extends FlyingObject {
         return this.type;
     }
 
+=======
+class spaceship extends FlyingObject {
+    constructor(x, y){
+        this.x = x;
+        this.y = y;
+    }
+
+    getX() {
+        return this.x;
+    }
+
+    getY() {
+        return this.y;
+    }
+
+    setType(t) {
+        this.type = t;
+    }
+
+    getType() {
+        return this.type;
+    }
+
+>>>>>>> edbc6c1ef4e72c3d323edf63ad38fb5edb221272
     getDistance(a, b) {
         return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) +
                          Math.pow(a.getY() - b.getY(), 2));
@@ -45,5 +70,8 @@ class spaceship extends FlyingObject {
         return (getDistance(this, g) < 10)
     }
 
+<<<<<<< HEAD
+>>>>>>> edbc6c1ef4e72c3d323edf63ad38fb5edb221272
+=======
 >>>>>>> edbc6c1ef4e72c3d323edf63ad38fb5edb221272
 }
