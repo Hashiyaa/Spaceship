@@ -100,6 +100,15 @@ function LoadScene() {
         context.restore();
     }
 
+    function detectCollision() {
+        for (i = 0; i < garbageList.length; i++) {
+            if (getDistanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 10) {
+                garbageList.splice(i); // remove garbage from canvas
+                // TODO: increment score
+            }
+        }
+    }
+
     window.onkeydown = function(event) {
         var keyPr = event.keyCode; //Key code of key pressed
       
@@ -120,5 +129,10 @@ function LoadScene() {
     window.onkeyup = function(event) {
         dirX = 0;
         dirY = 0;
+    }
+
+    function getDistanceToShip(x, y) {
+        return Math.sqrt(Math.pow(posX - x, 2) + 
+            Math.pow(posY - y, 2));
     }
 }
