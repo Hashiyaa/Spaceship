@@ -128,17 +128,17 @@ function LoadScene() {
         var i;
         for (i = 0; i < garbageList.length; i++) {
             // let gbgX = garbageList[i].getX() + garbageList[i].
-            // if (distanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 50) {
-            //     garbageList.splice(i, 1); // remove garbage from canvas
-            //     // delete garbageList[i];
-            //     // concurrent modification?
-            //     // TODO: increment score
-            // }
+            if (distanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 30) {
+                garbageList.splice(i, 1); // remove garbage from canvas
+                // delete garbageList[i];
+                // concurrent modification?
+                // TODO: increment score
+            }
         }
     }
 
     function distanceToShip(x, y) {
-        return Math.sqrt(Math.pow(posX - x, 2) + Math.pow(posY - y, 2));
+        return Math.sqrt(Math.pow(114 + posX - x, 2) + Math.pow(posY - y, 2));
     }
 
     window.onkeydown = function(event) {
