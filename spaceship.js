@@ -20,7 +20,13 @@ class spaceship extends FlyingObject {
         return this.type;
     }
 
+    getDistance(a, b) {
+        return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) +
+                         Math.pow(a.getY() - b.getY(), 2));
+    }
+
     onCollisionWith(g) {
         return (getDistance(this, g) < 10)
     }
+
 }
