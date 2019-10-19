@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+=======
+let posX = 200;
+let posY = 200;
+let dirX = 0;
+let dirY = 0;
+let speed = 10;
+
+let garbageList = [];
+>>>>>>> c3347ab4237b59110f9ef8e1499df8156803e9b6
 
 function LoadScene() {
     let x = 200;
@@ -18,17 +28,26 @@ function LoadScene() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
         context.fillRect(0, 0, 50, 50);
-        drawSpaceship(x, y);
+
+        // update the position
+        if ((posX >= 100 && dirX < 0) || (posX <= 500 && dirX > 0)) {
+            posX += dirX * speed;
+        }
+        if ((posY >= 100 && dirY < 0) || (posY <= 500 && dirY > 0)) {
+            posY += dirY * speed;
+        }
+        // console.log("x: " + posX + " y: " + posY);
+        drawSpaceship(posX, posY);
         context.restore();
         window.requestAnimationFrame(draw);
     }
     draw();
 
     function drawSpaceship(x, y) {
-        context.save();
-        //context.translate(275, (0.2 * i) % canvas.height);
         let img = new Image(); // Create new img element
         img.src = 'images/spaceship.png'; // Set source path
+        context.save();
+        context.translate(-100, -100); // hard code
         context.drawImage(img, x, y);
         // img.onload = function() {
         //     context.drawImage(img, 100, 100);
@@ -36,26 +55,29 @@ function LoadScene() {
         context.restore();
     }
 
+    function createGarbage(){
+        // garbageList.push(new garbage());
+    }
+
     window.onkeydown = function(event) {
         var keyPr = event.keyCode; //Key code of key pressed
       
-        if((keyPr === 39 || keyPr === 68) && x<=460){  
-            x = x+20; //right arrow add 20 from current
+        if(keyPr === 39 || keyPr === 68){  
+            dirX = 1; //right arrow add 20 from current
         }
-        else if((keyPr === 37 || keyPr === 65) && x>10){
-            x = x-20; //left arrow subtract 20 from current
+        else if(keyPr === 37 || keyPr === 65){
+            dirX = -1; //left arrow subtract 20 from current
         }
-        else if((keyPr === 38  || keyPr === 87) && y>10) {
-            y = y-20; //top arrow subtract 20 from current
+        else if(keyPr === 38  || keyPr === 87) {
+            dirY = -1; //top arrow subtract 20 from current
         }
-        else if((keyPr === 40 || keyPr === 83) && y<=460){
-            y = y+20; //bottom arrow add 20 from current
+        else if(keyPr === 40 || keyPr === 83){
+            dirY = 1; //bottom arrow add 20 from current
         }
-            
-          /*clearing anything drawn on canvas
-         *comment this below do draw path */
-        console.log("x: " + x + " y: " + y);
-        // drawSpaceship(x, y);
-        // Drawing rectangle at new position
     };
+
+    window.onkeyup = function(event) {
+        dirX = 0;
+        dirY = 0;
+    }
 }
