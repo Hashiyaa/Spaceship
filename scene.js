@@ -56,7 +56,11 @@ function LoadScene() {
         draw_garbage();
         for(let i=0;i<garbageList.length;i++){
             let g = garbageList[i];
-            g.setY(g.getY()+g.getVelocity());
+            if(g.getY()>600+g.getY()){
+                garbageList.splice(i,1);
+            }else{
+                g.setY(g.getY()+g.getVelocity());
+            }
         }
         context.restore();
         window.requestAnimationFrame(draw);
@@ -94,8 +98,11 @@ function LoadScene() {
         let temp = garbage_types[index].length;
         let subindex = Math.floor(Math.random() * temp);
         let name = (garbage_types[index])[subindex];
-        let randomX = Math.floor(Math.random()*601 - 50);
-        let gbg = new garbage(randomX,0,type,name, 1); // hard code
+        let img = new Image();
+        img.src = "images/" + name + ".png";
+        let randomX = Math.floor(Math.random()*(601-img.width));
+        let randomVelocity = Math.random()*1+1;
+        let gbg = new garbage(randomX,0,type,name,randomVelocity); // hard code
         garbageList.push(gbg);
     }
 
