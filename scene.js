@@ -6,7 +6,14 @@ function LoadScene() {
     let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
     let context = canvas.getContext("2d");
     let i = this.performance.now();
-    
+
+    function ButtonDisappear(){
+
+        document.getElementById("StartButton").remove();
+
+    }
+    ButtonDisappear();
+
     function draw() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();

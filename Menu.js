@@ -21,5 +21,6 @@ window.onload = function(){
     StartButton.style = StartButtonStyle;
 
     StartButton.setAttribute("onclick","LoadScene()");
+    StartButton.setAttribute("id","StartButton");
     MainFrame.appendChild(StartButton);
 }
