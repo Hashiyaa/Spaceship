@@ -54,6 +54,10 @@ function LoadScene() {
             generationCount = 0;
         }
         draw_garbage();
+        for(let i=0;i<garbageList.length;i++){
+            let g = garbageList[i];
+            g.setY(g.getY()+g.getVelocity());
+        }
         context.restore();
         window.requestAnimationFrame(draw);
         window.requestAnimationFrame(detectCollision); // check for collision between spaceship and garbage constantly
@@ -102,7 +106,7 @@ function LoadScene() {
             let name = g.getName();
             let img = new Image();
             img.src = "images/" + name + ".png";
-            context.drawImage(img,g.getX(),g.getY());
+            context.drawImage(img,g.getX(),g.getY()-img.height);
         }
         context.restore();
     }

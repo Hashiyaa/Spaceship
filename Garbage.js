@@ -15,6 +15,10 @@ export default class garbage {
         return this.y;
     }
 
+    setY(y){
+        this.y = y;
+    }
+
     getType() {
         return this.type;
     }
