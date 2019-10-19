@@ -40,14 +40,13 @@ function LoadScene() {
     function draw() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
-        context.fillRect(0, 0, 50, 50);
 
         generationCount++;
         // update the position
         if ((posX >= 0 && dirX < 0) || (posX <= 600 - img.width && dirX > 0)) {
             posX += dirX * speed;
         }
-        if ((posY >= 0 && dirY < 0) || (posY <= 600 - img.width && dirY > 0)) {
+        if ((posY >= 0 && dirY < 0) || (posY <= 600 - img.height && dirY > 0)) {
             posY += dirY * speed;
         }
         // console.log("x: " + posX + " y: " + posY);
@@ -73,9 +72,7 @@ function LoadScene() {
     draw();
 
     function drawSpaceship(x, y, img) {
-        
         context.save();
-        // context.translate(-100, -100); // hard code
         context.drawImage(img, x, y);
         // img.onload = function() {
         //     context.drawImage(img, 100, 100);
