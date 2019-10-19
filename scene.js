@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 let posX = 200;
 let posY = 200;
 let dirX = 0;
@@ -7,7 +5,6 @@ let dirY = 0;
 let speed = 10;
 
 let garbageList = [];
->>>>>>> c3347ab4237b59110f9ef8e1499df8156803e9b6
 
 function LoadScene() {
     let x = 200;
