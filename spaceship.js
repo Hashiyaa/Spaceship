@@ -1,6 +1,5 @@
 let collector_Types = ['household_food_waste','residual_waste','recyclable_waste','hazardous_waste'];
-
-class spaceship extends FlyingObject {
+class spaceship {
     constructor(x, y){
         this.x = x;
         this.y = y;
