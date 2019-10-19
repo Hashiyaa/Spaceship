@@ -49,7 +49,7 @@ function LoadScene() {
         draw_garbage();
         context.restore();
         window.requestAnimationFrame(draw);
-        window.requestAnimationFrame(detectCollision);
+        window.requestAnimationFrame(detectCollision); // check for collision between spaceship and garbage constantly
     }
     draw();
 
