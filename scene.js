@@ -101,12 +101,18 @@ function LoadScene() {
     }
 
     function detectCollision() {
+        var i;
         for (i = 0; i < garbageList.length; i++) {
-            if (getDistanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 10) {
+            if (distanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 100) {
                 garbageList.splice(i); // remove garbage from canvas
+                // concurrent modification?
                 // TODO: increment score
             }
         }
+    }
+
+    function distanceToShip(x, y) {
+        return Math.sqrt(Math.pow(posX - x, 2)+ Math.pow(posY - y, 2));
     }
 
     window.onkeydown = function(event) {
