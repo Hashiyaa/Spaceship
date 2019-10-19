@@ -1,28 +1,6 @@
 let x = 200;
 let y = 200;
 
-window.onkeydown = function(event) {
-    var keyPr = event.keyCode; //Key code of key pressed
-  
-    if((keyPr === 39 || keyPr === 100) && x<=460){ 
-        x = x+20; //right arrow add 20 from current
-    }
-    else if((keyPr === 37 || keyPr === 97) && x>10){
-        x = x-20; //left arrow subtract 20 from current
-    }
-    else if((keyPr === 38  || keyPr === 119) && y>10) {
-        y = y-20; //top arrow subtract 20 from current
-    }
-    else if((keyPr === 40 || keyPr === 115) && y<=460){
-        y = y+20; //bottom arrow add 20 from current
-    }
-        
-      /*clearing anything drawn on canvas
-     *comment this below do draw path */
-  
-      //Drawing rectangle at new position
-};
-
 window.onload = function() {
     let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
     let context = canvas.getContext("2d");
@@ -32,7 +10,6 @@ window.onload = function() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
         context.fillRect(0, 0, 50, 50);
-        console.log("x: " + x + " y: " + y);
         drawSpaceship(x, y);
         context.restore();
         window.requestAnimationFrame(draw);
@@ -50,4 +27,27 @@ window.onload = function() {
         // };
         context.restore();
     }
+
+    window.onkeydown = function(event) {
+        var keyPr = event.keyCode; //Key code of key pressed
+      
+        if((keyPr === 39 || keyPr === 68) && x<=460){ 
+            x = x+20; //right arrow add 20 from current
+        }
+        else if((keyPr === 37 || keyPr === 65) && x>10){
+            x = x-20; //left arrow subtract 20 from current
+        }
+        else if((keyPr === 38  || keyPr === 87) && y>10) {
+            y = y-20; //top arrow subtract 20 from current
+        }
+        else if((keyPr === 40 || keyPr === 83) && y<=460){
+            y = y+20; //bottom arrow add 20 from current
+        }
+            
+          /*clearing anything drawn on canvas
+         *comment this below do draw path */
+        console.log("x: " + x + " y: " + y);
+        // drawSpaceship(x, y);
+        // Drawing rectangle at new position
+    };
 }

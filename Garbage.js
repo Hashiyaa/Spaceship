@@ -1,4 +1,4 @@
-class garbage extends FlyingObject{
+class garbage {
     constructor(x, y, type, name){
         this.x = x;
         this.y = y;
