@@ -41,6 +41,9 @@ function LoadScene() {
     function draw() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
+        context.beginPath();
+        context.arc(73+posX, posY, 5, 0, Math.PI * 2, false);
+        context.fill();
 
         generationCount++;
         // update the position
@@ -138,7 +141,8 @@ function LoadScene() {
     }
 
     function distanceToShip(x, y) {
-        return Math.sqrt(Math.pow(57 + posX - x, 2) + Math.pow(posY - y, 2));
+        
+        return Math.sqrt(Math.pow(73 + posX - x, 2) + Math.pow(posY - y, 2));
     }
 
     window.onkeydown = function(event) {
