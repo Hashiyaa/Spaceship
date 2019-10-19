@@ -32,7 +32,7 @@ function LoadScene() {
     window.onkeydown = function(event) {
         var keyPr = event.keyCode; //Key code of key pressed
       
-        if((keyPr === 39 || keyPr === 68) && x<=460){ 
+        if((keyPr === 39 || keyPr === 68) && x<=460){  
             x = x+20; //right arrow add 20 from current
         }
         else if((keyPr === 37 || keyPr === 65) && x>10){
