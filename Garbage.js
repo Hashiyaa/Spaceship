@@ -1,9 +1,9 @@
 export default class garbage {
     constructor(x, y, type, name, velocity){
-        this.x = x;
-        this.y = y;
         this.type = type;
         this.name = name;
+        this.x = x + this.getWidth()/2;
+        this.y = y + this.getHeight();
         this.velocity = velocity;
     }
 
@@ -33,5 +33,17 @@ export default class garbage {
 
     getVelocity() {
         return this.velocity;
+    }
+
+    getWidth() {
+        let img = new Image();
+        img.src = "images/" + this.name + ".png";
+        return img.width;
+    }
+
+    getHeight() {
+        let img = new Image();
+        img.src = "images/" + this.name + ".png";
+        return img.height;
     }
 }
