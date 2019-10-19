@@ -32,4 +32,12 @@ Button{
     left:50%;
     transform: translate(-300px,30px);
     color: indigo;
+    font-family: fantasy;
+}
+#Score{
+    position: absolute;
+    left:50%;
+    transform: translate(-300px,16px);
+    font-family: fantasy;
+    color: rgb(50, 56, 141);
 }
