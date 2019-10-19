@@ -29,6 +29,14 @@ function LoadScene() {
     }
     ButtonDisappear();
 
+    function LoadEnergy(){
+        let energy = document.createElement("progress");
+        energy.setAttribute("id","Energy");
+        energy.max = 100;
+        energy.value = 50;
+        MainFrame.appendChild(energy);
+    }
+    LoadEnergy();
     garbage_types.push(household_food_waste);
     garbage_types.push(residual_waste);
     garbage_types.push(recyclable_waste);
@@ -186,3 +194,4 @@ window.onload = function(){
 function Settings(){
 
 }
+

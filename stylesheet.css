@@ -27,7 +27,7 @@ Button{
 #SettingButton{
     top: 480px;
 }
-#MaxScore{
+#HighestScore{
     position:absolute;
     left:50%;
     transform: translate(-300px,30px);
@@ -40,4 +40,11 @@ Button{
     transform: translate(-300px,16px);
     font-family: fantasy;
     color: rgb(50, 56, 141);
+}
+#Energy{
+    position: absolute;
+    height: 10px;
+    width:300px;
+    left: 50%;
+    transform:translate(-50%,-15px);
 }
