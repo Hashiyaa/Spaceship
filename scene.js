@@ -138,9 +138,11 @@ function LoadScene() {
             dirX = -1; //left arrow subtract 20 from current
         }
         else if(keyPr === 38  || keyPr === 87) {
+            event.preventDefault();
             dirY = -1; //top arrow subtract 20 from current
         }
         else if(keyPr === 40 || keyPr === 83) {
+            event.preventDefault();
             dirY = 1; //bottom arrow add 20 from current
         }
     };
