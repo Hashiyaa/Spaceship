@@ -5,6 +5,7 @@ let posY = 200;
 let dirX = 0;
 let dirY = 0;
 let speed = 10;
+let generationCount = 100;
 
 let garbageList = [];
 let household_food_waste = ['apple','bone','cheese','fish','watermelon'];
@@ -16,6 +17,7 @@ let garbage_types = [];
 function LoadScene() {
     let x = 200;
     let y = 200;
+    let generationRate = 100;
 
     let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
     let context = canvas.getContext("2d");
@@ -36,6 +38,8 @@ function LoadScene() {
         context.save();
         context.fillRect(0, 0, 50, 50);
 
+        generationCount++;
+
         // update the position
         if ((posX >= 100 && dirX < 0) || (posX <= 500 && dirX > 0)) {
             posX += dirX * speed;
@@ -45,7 +49,10 @@ function LoadScene() {
         }
         // console.log("x: " + posX + " y: " + posY);
         drawSpaceship(posX, posY);
-        generate_garbage();
+        if(generationCount>=generationRate){
+            generate_garbage();
+            generationCount = 0;
+        }
         draw_garbage();
         context.restore();
         window.requestAnimationFrame(draw);
