@@ -20,7 +20,6 @@ class spaceship extends FlyingObject {
     getCollectorType() {
         return this.type;
     }
-
     getDistance(a, b) {
         return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) +
                          Math.pow(a.getY() - b.getY(), 2));
@@ -29,5 +28,4 @@ class spaceship extends FlyingObject {
     onCollisionWith(g) {
         return (getDistance(this, g) < 10)
     }
-
 }
