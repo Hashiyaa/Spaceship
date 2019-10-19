@@ -45,11 +45,13 @@ Button{
     position: absolute;
     height: 10px;
     width:240px;
-    left: 41.9%;
-    transform:translate(-50%,-590px);
+    left: 50%;
+    transform:translate(-100%,-585px);
 }
 
 #Energy_Img{
     position: absolute;
-    left: 40%;
+    left: 50%;
+    transform:translate(-764%,0px);
+    top:80px;
 }
