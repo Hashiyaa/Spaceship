@@ -10,12 +10,13 @@ Button{
     border: 10px solid;
     border-radius: 30px;
     background-color:rgb(238, 178, 12);
-    left: 45%;
     position: absolute;
-    width: 280px;
+    width: 10%;
     height: 110px;
     font-size: 40px;
-    top: 17%;
+    top: 200px;
+    left: 45%;
     border-color:orange ;
-    color: greenyellow;
+    color: rgb(194, 236, 6);
 }
+
