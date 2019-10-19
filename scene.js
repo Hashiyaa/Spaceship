@@ -1,3 +1,5 @@
+import garbage from "./garbage.js";
+
 let posX = 200;
 let posY = 200;
 let dirX = 0;
@@ -17,14 +19,17 @@ function LoadScene() {
 
     let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
     let context = canvas.getContext("2d");
-    let i = this.performance.now();
+    // let i = this.performance.now();
 
     function ButtonDisappear(){
-
         document.getElementById("StartButton").remove();
-
     }
     ButtonDisappear();
+
+    garbage_types.push(household_food_waste);
+    garbage_types.push(residual_waste);
+    garbage_types.push(recyclable_waste);
+    garbage_types.push(hazardous_waste);
 
     function draw() {
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -44,6 +49,7 @@ function LoadScene() {
         draw_garbage();
         context.restore();
         window.requestAnimationFrame(draw);
+        window.requestAnimationFrame(detectCollision);
     }
     draw();
 
@@ -57,13 +63,6 @@ function LoadScene() {
         //     context.drawImage(img, 100, 100);
         // };
         context.restore();
-    }
-
-    function initialize_types(){
-        garbage_types.push(household_food_waste);
-        garbage_types.push(residual_waste);
-        garbage_types.push(recyclable_waste);
-        garbage_types.push(hazardous_waste);
     }
 
     function generate_garbage(){
@@ -84,35 +83,45 @@ function LoadScene() {
         let temp = garbage_types[index].length;
         let subindex = Math.floor(Math.random() * temp);
         let name = (garbage_types[index])[subindex];
-        
-        let filename = name + ".png";
-        let randomX = Math.floor(Math.random()*601);
-        let gbg = new garbage(x,0,type,name,filename);
+        let randomX = Math.floor(Math.random()*601 - 50);
+        let gbg = new garbage(randomX,0,type,name, 1); // hard code
         garbageList.push(gbg);
     }
 
     function draw_garbage(){
         context.save();
-        for(i=0;i<garbageList.length;i--){
+        for(let i = 0; i < garbageList.length; i++) {
             let g = garbageList[i];
-            context.drawImage(g.getImage(),g.getX(),g.getY());
+            let name = g.getName();
+            let img = new Image();
+            img.src = "images/" + name + ".png";
+            context.drawImage(img,g.getX(),g.getY());
         }
         context.restore();
+    }
+
+    function detectCollision() {
+        for (i = 0; i < garbageList.length; i++) {
+            if (getDistanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 10) {
+                garbageList.splice(i); // remove garbage from canvas
+                // TODO: increment score
+            }
+        }
     }
 
     window.onkeydown = function(event) {
         var keyPr = event.keyCode; //Key code of key pressed
       
-        if(keyPr === 39 || keyPr === 68){  
+        if(keyPr === 39 || keyPr === 68) {  
             dirX = 1; //right arrow add 20 from current
         }
-        else if(keyPr === 37 || keyPr === 65){
+        else if(keyPr === 37 || keyPr === 65) {
             dirX = -1; //left arrow subtract 20 from current
         }
         else if(keyPr === 38  || keyPr === 87) {
             dirY = -1; //top arrow subtract 20 from current
         }
-        else if(keyPr === 40 || keyPr === 83){
+        else if(keyPr === 40 || keyPr === 83) {
             dirY = 1; //bottom arrow add 20 from current
         }
     };
@@ -121,4 +130,13 @@ function LoadScene() {
         dirX = 0;
         dirY = 0;
     }
+}
+
+window.onload = function(){
+    // Get canvas element and its context
+    let MainFrame = document.getElementById("MainFrame");
+    let StartButton = document.createElement("button");
+    StartButton.onclick = LoadScene;
+    StartButton.setAttribute("id","StartButton");
+    MainFrame.appendChild(StartButton);
 }
