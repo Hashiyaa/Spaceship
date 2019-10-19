@@ -164,6 +164,7 @@ function LoadScene() {
         var keyPr = event.keyCode; //Key code of key pressed
       
         if (keyPr === 32) {
+            event.preventDefault();
             currIndex = ((currIndex + 1) % 4);
             currType = collector_Types[currIndex];
         }
