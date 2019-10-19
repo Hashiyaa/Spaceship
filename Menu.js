@@ -9,17 +9,6 @@ window.onload = function(){
 
     let StartButton = document.createElement("button");
 
-    let StartButtonStyle = 
-    "background-color: grey;\
-        left: 1150px;\
-        position: absolute;\
-        width: 280px;\
-        height: 110px;\
-        font-size: 40px;\
-        top: 220px;\
-    ";
-    StartButton.style = StartButtonStyle;
-
     StartButton.setAttribute("onclick","LoadScene()");
     StartButton.setAttribute("id","StartButton");
     MainFrame.appendChild(StartButton);
