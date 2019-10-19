@@ -27,3 +27,9 @@ Button{
 #SettingButton{
     top: 480px;
 }
+#MaxScore{
+    position:absolute;
+    left:50%;
+    transform: translate(-300px,30px);
+    color: indigo;
+}
