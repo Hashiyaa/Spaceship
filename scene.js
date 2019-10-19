@@ -151,11 +151,23 @@ window.onload = function(){
     let ctx = canvas.getContext('2d');
 
     let MainFrame = document.getElementById("MainFrame");
-
+    //Create Buttons
     let StartButton = document.createElement("button");
+    let SettingButton = document.createElement("button");
 
     StartButton.innerHTML = "START";
+    SettingButton.innerHTML = "SETTINGS";
+
     StartButton.onclick = LoadScene;
+    SettingButton.onclick = Settings;
+
     StartButton.setAttribute("id","StartButton");
+    SettingButton.setAttribute("id","SettingButton");
+
     MainFrame.appendChild(StartButton);
+    MainFrame.appendChild(SettingButton);
+}
+
+function Settings(){
+
 }

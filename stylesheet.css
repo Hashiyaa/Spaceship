@@ -15,9 +15,15 @@ Button{
     position: absolute;
     left:50%;
     transform:translate(-50%,-50%);
-    top:250px;
     font-size: 40px;
-    border-color:orange ;
+    border-color:orange;
     color: rgb(194, 236, 6);
 }
 
+#StartButton{
+    top:250px;
+}
+
+#SettingButton{
+    top: 480px;
+}
