@@ -7,13 +7,15 @@ canvas {
 }
 
 Button{
-    border: 1px solid;
-    border-radius: 3px;
-    background-color: grey;
-    left: 1150px;
+    border: 10px solid;
+    border-radius: 30px;
+    background-color:rgb(238, 178, 12);
+    left: 45%;
     position: absolute;
     width: 280px;
     height: 110px;
     font-size: 40px;
-    top: 220px;
+    top: 17%;
+    border-color:orange ;
+    color: greenyellow;
 }

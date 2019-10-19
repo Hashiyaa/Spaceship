@@ -9,6 +9,7 @@ window.onload = function(){
 
     let StartButton = document.createElement("button");
 
+    StartButton.innerHTML = "START";
     StartButton.setAttribute("onclick","LoadScene()");
     StartButton.setAttribute("id","StartButton");
     MainFrame.appendChild(StartButton);
