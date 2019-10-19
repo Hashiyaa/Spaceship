@@ -138,7 +138,7 @@ function LoadScene() {
     }
 
     function distanceToShip(x, y) {
-        return Math.sqrt(Math.pow(114 + posX - x, 2) + Math.pow(posY - y, 2));
+        return Math.sqrt(Math.pow(57 + posX - x, 2) + Math.pow(posY - y, 2));
     }
 
     window.onkeydown = function(event) {
