@@ -49,6 +49,7 @@ function LoadScene() {
         draw_garbage();
         context.restore();
         window.requestAnimationFrame(draw);
+        window.requestAnimationFrame(detectCollision);
     }
     draw();
 
