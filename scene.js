@@ -102,7 +102,7 @@ function LoadScene() {
         let img = new Image();
         img.src = "images/" + name + ".png";
         let randomX = Math.floor(Math.random()*(601-img.width));
-        let randomVelocity = Math.random()*1+1;
+        let randomVelocity = Math.random()*1.5+0.5;
         let gbg = new garbage(randomX,0,type,name,randomVelocity); // hard code
         garbageList.push(gbg);
     }
