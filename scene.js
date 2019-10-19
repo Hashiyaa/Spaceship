@@ -128,7 +128,7 @@ function LoadScene() {
         var i;
         for (i = 0; i < garbageList.length; i++) {
             // let gbgX = garbageList[i].getX() + garbageList[i].
-            if (distanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 30) {
+            if (distanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 20) {
                 garbageList.splice(i, 1); // remove garbage from canvas
                 // delete garbageList[i];
                 // concurrent modification?
@@ -138,7 +138,7 @@ function LoadScene() {
     }
 
     function distanceToShip(x, y) {
-        return Math.sqrt(Math.pow(57 + posX - x, 2) + Math.pow(posY - y, 2));
+        return Math.sqrt(Math.pow(72 + posX - x, 2) + Math.pow(posY - y, 2));
     }
 
     window.onkeydown = function(event) {
