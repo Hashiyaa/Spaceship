@@ -1,7 +1,8 @@
-let x = 200;
-let y = 200;
 
-window.onload = function() {
+function LoadScene() {
+    let x = 200;
+    let y = 200;
+
     let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
     let context = canvas.getContext("2d");
     let i = this.performance.now();
