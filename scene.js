@@ -23,6 +23,9 @@ function LoadScene() {
     let context = canvas.getContext("2d");
     // let i = this.performance.now();
 
+    let img = new Image(); // Create new img element
+    img.src = 'images/spaceship.png'; // Set source path
+
     function ButtonDisappear(){
         document.getElementById("StartButton").remove();
         document.getElementById("SettingButton").remove();
@@ -40,16 +43,16 @@ function LoadScene() {
         context.fillRect(0, 0, 50, 50);
 
         generationCount++;
-
         // update the position
-        if ((posX >= 100 && dirX < 0) || (posX <= 500 && dirX > 0)) {
+        if ((posX >= 0 && dirX < 0) || (posX <= 600 - img.width && dirX > 0)) {
             posX += dirX * speed;
         }
-        if ((posY >= 100 && dirY < 0) || (posY <= 500 && dirY > 0)) {
+        if ((posY >= 0 && dirY < 0) || (posY <= 600 - img.width && dirY > 0)) {
             posY += dirY * speed;
         }
         // console.log("x: " + posX + " y: " + posY);
-        drawSpaceship(posX, posY);
+        
+        drawSpaceship(posX, posY, img);
         if(generationCount>=generationRate){
             generate_garbage();
             generationCount = 0;
@@ -69,9 +72,8 @@ function LoadScene() {
     }
     draw();
 
-    function drawSpaceship(x, y) {
-        let img = new Image(); // Create new img element
-        img.src = 'images/spaceship.png'; // Set source path
+    function drawSpaceship(x, y, img) {
+        
         context.save();
         // context.translate(-100, -100); // hard code
         context.drawImage(img, x, y);
