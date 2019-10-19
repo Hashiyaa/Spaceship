@@ -25,6 +25,7 @@ function LoadScene() {
 
     function ButtonDisappear(){
         document.getElementById("StartButton").remove();
+        document.getElementById("SettingButton").remove();
     }
     ButtonDisappear();
 
