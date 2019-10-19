@@ -45,6 +45,6 @@ Button{
     position: absolute;
     height: 10px;
     width:300px;
-    left: 50%;
-    transform:translate(-50%,-15px);
+    left: 42%;
+    transform:translate(-50%,-590px);
 }
