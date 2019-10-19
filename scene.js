@@ -104,9 +104,12 @@ function LoadScene() {
         let temp = garbage_types[index].length;
         let subindex = Math.floor(Math.random() * temp);
         let name = (garbage_types[index])[subindex];
+        
         let img = new Image();
         img.src = "images/" + name + ".png";
-        let randomX = Math.floor(Math.random()*(601-img.width)+img.width/2);
+        console.log(img.width);
+        let randomX = Math.floor(Math.random()*526+37.5);
+        
         let randomVelocity = Math.random()*1.5+0.5;
         let gbg = new garbage(randomX,0,type,name,randomVelocity); // hard code
         garbageList.push(gbg);
