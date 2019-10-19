@@ -41,6 +41,9 @@ function LoadScene() {
     function draw() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
+        context.beginPath();
+        context.arc(73+posX, posY, 5, 0, Math.PI * 2, false);
+        context.fill();
 
         generationCount++;
         // update the position
@@ -60,7 +63,7 @@ function LoadScene() {
         draw_garbage();
         for(let i=0;i<garbageList.length;i++){
             let g = garbageList[i];
-            if(g.getY()>650){
+            if(g.getY()>600 + g.getHeight()){
                 garbageList.splice(i,1);
             }else{
                 g.setY(g.getY()+g.getVelocity());
@@ -106,7 +109,7 @@ function LoadScene() {
         let name = (garbage_types[index])[subindex];
         let img = new Image();
         img.src = "images/" + name + ".png";
-        let randomX = Math.floor(Math.random()*(601-img.width/2));
+        let randomX = Math.floor(Math.random()*(601-img.width)+img.width/2);
         let randomVelocity = Math.random()*1.5+0.5;
         let gbg = new garbage(randomX,0,type,name,randomVelocity); // hard code
         garbageList.push(gbg);
@@ -119,7 +122,7 @@ function LoadScene() {
             let name = g.getName();
             let img = new Image();
             img.src = "images/" + name + ".png";
-            context.drawImage(img,g.getX()-img.width/2,g.getY()-img.height);
+            context.drawImage(img,g.getX()-g.getWidth()/2,g.getY()-img.height*3/2);
         }
         context.restore();
     }
@@ -138,7 +141,8 @@ function LoadScene() {
     }
 
     function distanceToShip(x, y) {
-        return Math.sqrt(Math.pow(72 + posX - x, 2) + Math.pow(posY - y, 2));
+        
+        return Math.sqrt(Math.pow(73 + posX - x, 2) + Math.pow(posY - y, 2));
     }
 
     window.onkeydown = function(event) {
