@@ -1,6 +1,8 @@
 let x = 200;
 let y = 200;
 
+let garbageList = [];
+
 window.onload = function() {
     let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
     let context = canvas.getContext("2d");
@@ -26,6 +28,10 @@ window.onload = function() {
         //     context.drawImage(img, 100, 100);
         // };
         context.restore();
+    }
+
+    function createGarbage(){
+        // garbageList.push(new garbage());
     }
 
     window.onkeydown = function(event) {

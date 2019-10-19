@@ -1,9 +1,11 @@
 class garbage {
-    constructor(x, y, type, name){
+    constructor(x, y, type, name, filename){
         this.x = x;
         this.y = y;
         this.type = type;
         this.name = name;
+        this.image = new Image();
+        this.image.src = filename;
     }
 
     getX() {
@@ -20,6 +22,10 @@ class garbage {
 
     getName() {
         return this.name;
+    }
+
+    getImage(){
+        return this.image;
     }
 
     setVelocity(v) {
