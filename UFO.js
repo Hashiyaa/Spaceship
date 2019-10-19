@@ -12,6 +12,6 @@ class UFO extends FlyingObject {
     }
 
     onCollisionWith(g) {
-        if 
+        return (getDistance(this, g) < 10)
     }
 }
