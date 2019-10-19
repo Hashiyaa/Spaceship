@@ -68,7 +68,7 @@ function LoadScene() {
         let img = new Image(); // Create new img element
         img.src = 'images/spaceship.png'; // Set source path
         context.save();
-        context.translate(-100, -100); // hard code
+        // context.translate(-100, -100); // hard code
         context.drawImage(img, x, y);
         // img.onload = function() {
         //     context.drawImage(img, 100, 100);
@@ -112,12 +112,18 @@ function LoadScene() {
     }
 
     function detectCollision() {
+        var i;
         for (i = 0; i < garbageList.length; i++) {
-            if (getDistanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 10) {
+            if (distanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 100) {
                 garbageList.splice(i); // remove garbage from canvas
+                // concurrent modification?
                 // TODO: increment score
             }
         }
+    }
+
+    function distanceToShip(x, y) {
+        return Math.sqrt(Math.pow(posX - x, 2)+ Math.pow(posY - y, 2));
     }
 
     window.onkeydown = function(event) {
