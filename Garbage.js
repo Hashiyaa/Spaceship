@@ -37,13 +37,13 @@ export default class garbage {
 
     getWidth() {
         let img = new Image();
-        img.src = "images/" + this.name + ".png";
+        img.src = "images/" + this.getName() + ".png";
         return img.width;
     }
 
     getHeight() {
         let img = new Image();
-        img.src = "images/" + this.name + ".png";
+        img.src = "images/" + this.getName() + ".png";
         return img.height;
     }
 }
