@@ -25,6 +25,7 @@ function LoadScene() {
 
     function ButtonDisappear(){
         document.getElementById("StartButton").remove();
+        document.getElementById("SettingButton").remove();
     }
     ButtonDisappear();
 
@@ -122,7 +123,8 @@ function LoadScene() {
         var i;
         for (i = 0; i < garbageList.length; i++) {
             if (distanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 100) {
-                garbageList.splice(i); // remove garbage from canvas
+                garbageList.splice(i, 1); // remove garbage from canvas
+                // delete garbageList[i];
                 // concurrent modification?
                 // TODO: increment score
             }
@@ -143,9 +145,11 @@ function LoadScene() {
             dirX = -1; //left arrow subtract 20 from current
         }
         else if(keyPr === 38  || keyPr === 87) {
+            event.preventDefault();
             dirY = -1; //top arrow subtract 20 from current
         }
         else if(keyPr === 40 || keyPr === 83) {
+            event.preventDefault();
             dirY = 1; //bottom arrow add 20 from current
         }
     };
@@ -162,11 +166,23 @@ window.onload = function(){
     let ctx = canvas.getContext('2d');
 
     let MainFrame = document.getElementById("MainFrame");
-
+    //Create Buttons
     let StartButton = document.createElement("button");
+    let SettingButton = document.createElement("button");
 
     StartButton.innerHTML = "START";
+    SettingButton.innerHTML = "SETTINGS";
+
     StartButton.onclick = LoadScene;
+    SettingButton.onclick = Settings;
+
     StartButton.setAttribute("id","StartButton");
+    SettingButton.setAttribute("id","SettingButton");
+
     MainFrame.appendChild(StartButton);
+    MainFrame.appendChild(SettingButton);
+}
+
+function Settings(){
+
 }
