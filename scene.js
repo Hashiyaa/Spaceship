@@ -60,7 +60,7 @@ function LoadScene() {
         draw_garbage();
         for(let i=0;i<garbageList.length;i++){
             let g = garbageList[i];
-            if(g.getY()>600+g.getY()){
+            if(g.getY()>650){
                 garbageList.splice(i,1);
             }else{
                 g.setY(g.getY()+g.getVelocity());
@@ -103,7 +103,7 @@ function LoadScene() {
         let name = (garbage_types[index])[subindex];
         let img = new Image();
         img.src = "images/" + name + ".png";
-        let randomX = Math.floor(Math.random()*(601-img.width));
+        let randomX = Math.floor(Math.random()*(601-img.width/2));
         let randomVelocity = Math.random()*1.5+0.5;
         let gbg = new garbage(randomX,0,type,name,randomVelocity); // hard code
         garbageList.push(gbg);
@@ -116,7 +116,7 @@ function LoadScene() {
             let name = g.getName();
             let img = new Image();
             img.src = "images/" + name + ".png";
-            context.drawImage(img,g.getX(),g.getY()-img.height);
+            context.drawImage(img,g.getX()-img.width/2,g.getY()-img.height);
         }
         context.restore();
     }
