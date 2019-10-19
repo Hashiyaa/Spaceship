@@ -3,7 +3,7 @@ export default class garbage {
         this.type = type;
         this.name = name;
         this.x = x + this.getWidth()/2;
-        this.y = y + this.getHeight()/2;
+        this.y = y + this.getHeight();
         this.velocity = velocity;
     }
 
