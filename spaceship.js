@@ -28,4 +28,10 @@ class spaceship {
     onCollisionWith(g) {
         return (getDistance(this, g) < 10)
     }
+
+    // collect garbage method, put it in something like update()
+    // for all garbage in canvas:
+    //   if this.onCollisionWith(garbage):
+    //     remove garbage from canvas
+    //     increment score
 }
