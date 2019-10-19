@@ -64,7 +64,7 @@ function LoadScene() {
         let img = new Image(); // Create new img element
         img.src = 'images/spaceship.png'; // Set source path
         context.save();
-        context.translate(-100, -100); // hard code
+        // context.translate(-100, -100); // hard code
         context.drawImage(img, x, y);
         // img.onload = function() {
         //     context.drawImage(img, 100, 100);
