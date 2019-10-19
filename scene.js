@@ -24,6 +24,9 @@ function LoadScene() {
     let context = canvas.getContext("2d");
     // let i = this.performance.now();
 
+    let img = new Image(); // Create new img element
+    img.src = 'images/spaceship.png'; // Set source path
+
     function ButtonDisappear(){
         document.getElementById("StartButton").remove();
         document.getElementById("SettingButton").remove();
@@ -38,19 +41,18 @@ function LoadScene() {
     function draw() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
-        context.fillRect(0, 0, 50, 50);
 
         generationCount++;
-
         // update the position
-        if ((posX >= 100 && dirX < 0) || (posX <= 500 && dirX > 0)) {
+        if ((posX >= 0 && dirX < 0) || (posX <= 600 - img.width && dirX > 0)) {
             posX += dirX * speed;
         }
-        if ((posY >= 100 && dirY < 0) || (posY <= 500 && dirY > 0)) {
+        if ((posY >= 0 && dirY < 0) || (posY <= 600 - img.height && dirY > 0)) {
             posY += dirY * speed;
         }
         // console.log("x: " + posX + " y: " + posY);
-        drawSpaceship(posX, posY);
+        
+        drawSpaceship(posX, posY, img);
         if(generationCount>=generationRate){
             generate_garbage();
             generationCount = 0;
@@ -58,7 +60,7 @@ function LoadScene() {
         draw_garbage();
         for(let i=0;i<garbageList.length;i++){
             let g = garbageList[i];
-            if(g.getY()>600+g.getY()){
+            if(g.getY()>650){
                 garbageList.splice(i,1);
             }else{
                 g.setY(g.getY()+g.getVelocity());
@@ -70,9 +72,7 @@ function LoadScene() {
     }
     draw();
 
-    function drawSpaceship(x, y) {
-        let img = new Image(); // Create new img element
-        img.src = 'images/spaceship.png'; // Set source path
+    function drawSpaceship(x, y, img) {
         context.save();
         // context.translate(-100, -100); // hard code
 
@@ -106,8 +106,8 @@ function LoadScene() {
         let name = (garbage_types[index])[subindex];
         let img = new Image();
         img.src = "images/" + name + ".png";
-        let randomX = Math.floor(Math.random()*(601-img.width));
-        let randomVelocity = Math.random()*1+1;
+        let randomX = Math.floor(Math.random()*(601-img.width/2));
+        let randomVelocity = Math.random()*1.5+0.5;
         let gbg = new garbage(randomX,0,type,name,randomVelocity); // hard code
         garbageList.push(gbg);
     }
@@ -119,7 +119,7 @@ function LoadScene() {
             let name = g.getName();
             let img = new Image();
             img.src = "images/" + name + ".png";
-            context.drawImage(img,g.getX(),g.getY()-img.height);
+            context.drawImage(img,g.getX()-img.width/2,g.getY()-img.height);
         }
         context.restore();
     }
