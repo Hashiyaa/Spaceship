@@ -1,4 +1,5 @@
 let collector_Types = ['household_food_waste','residual_waste','recyclable_waste','hazardous_waste'];
+
 class spaceship extends FlyingObject {
     constructor(x, y){
         this.x = x;
@@ -21,8 +22,8 @@ class spaceship extends FlyingObject {
         return this.type;
     }
     getDistance(a, b) {
-        return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) +
-                         Math.pow(a.getY() - b.getY(), 2));
+        return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + 
+            Math.pow(a.getY() - b.getY(), 2));
     }
 
     onCollisionWith(g) {
