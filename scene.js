@@ -2,6 +2,11 @@ let x = 200;
 let y = 200;
 
 let garbageList = [];
+let household_food_waste = ['apple','bone','cheese','fish','watermelon'];
+let residual_waste = ['cup'];
+let recyclable_waste = ['can','soda'];
+let hazardous_waste = ['battery','bulb'];
+let garbage_types = [];
 
 window.onload = function() {
     let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
@@ -13,6 +18,8 @@ window.onload = function() {
         context.save();
         context.fillRect(0, 0, 50, 50);
         drawSpaceship(x, y);
+        //generate_garbage();
+        draw_garbage();
         context.restore();
         window.requestAnimationFrame(draw);
     }
@@ -30,8 +37,45 @@ window.onload = function() {
         context.restore();
     }
 
-    function createGarbage(){
-        // garbageList.push(new garbage());
+    function initialize_types(){
+        garbage_types.push(household_food_waste);
+        garbage_types.push(residual_waste);
+        garbage_types.push(recyclable_waste);
+        garbage_types.push(hazardous_waste);
+    }
+
+    function generate_garbage(){
+        let index = Math.floor(Math.random()*4);
+        let type = '';
+        if(index===0){
+            type = 'household_food_waste';
+        }
+        else if(index===1){
+            type = 'residual_waste';
+        }
+        else if(index===2){
+            type = 'recyclable_waste';
+        }
+        else{
+            type = 'hazardous_waste';
+        }
+        let temp = garbage_types[index].length;
+        let subindex = Math.floor(Math.random() * temp);
+        let name = (garbage_types[index])[subindex];
+        
+        let filename = name + ".png";
+        let randomX = Math.floor(Math.random()*601);
+        let gbg = new garbage(x,0,type,name,filename);
+        garbageList.push(gbg);
+    }
+
+    function draw_garbage(){
+        context.save();
+        for(i=0;i<garbageList.length;i--){
+            let g = garbageList[i];
+            context.drawImage(g.getImage(),g.getX(),g.getY());
+        }
+        context.restore();
     }
 
     window.onkeydown = function(event) {
