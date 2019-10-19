@@ -6,6 +6,7 @@ let dirX = 0;
 let dirY = 0;
 let speed = 10;
 let generationCount = 100;
+let ship_Width = -1;
 
 let garbageList = [];
 let household_food_waste = ['apple','bone','cheese','fish','watermelon'];
@@ -73,7 +74,12 @@ function LoadScene() {
 
     function drawSpaceship(x, y, img) {
         context.save();
-        context.drawImage(img, x, y);
+        // context.translate(-100, -100); // hard code
+
+
+        ship_Width = img.width;
+        console.log(img.width);
+        context.drawImage(img, x, y);        
         // img.onload = function() {
         //     context.drawImage(img, 100, 100);
         // };
@@ -121,17 +127,18 @@ function LoadScene() {
     function detectCollision() {
         var i;
         for (i = 0; i < garbageList.length; i++) {
-            if (distanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 100) {
-                garbageList.splice(i, 1); // remove garbage from canvas
-                // delete garbageList[i];
-                // concurrent modification?
-                // TODO: increment score
-            }
+            // let gbgX = garbageList[i].getX() + garbageList[i].
+            // if (distanceToShip(garbageList[i].getX(), garbageList[i].getY()) < 50) {
+            //     garbageList.splice(i, 1); // remove garbage from canvas
+            //     // delete garbageList[i];
+            //     // concurrent modification?
+            //     // TODO: increment score
+            // }
         }
     }
 
     function distanceToShip(x, y) {
-        return Math.sqrt(Math.pow(posX - x, 2)+ Math.pow(posY - y, 2));
+        return Math.sqrt(Math.pow(posX - x, 2) + Math.pow(posY - y, 2));
     }
 
     window.onkeydown = function(event) {
