@@ -1,6 +1,15 @@
 class spaceship extends FlyingObject {
     constructor(x, y){
-        super(x, y);
+        this.x = x;
+        this.y = y;
+    }
+
+    getX() {
+        return this.x;
+    }
+
+    getY() {
+        return this.y;
     }
 
     setType(t) {

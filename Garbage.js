@@ -1,8 +1,17 @@
-class Garbage extends FlyingObject{
+class garbage extends FlyingObject{
     constructor(x, y, type, name){
-        super(x, y);
+        this.x = x;
+        this.y = y;
         this.type = type;
         this.name = name;
+    }
+
+    getX() {
+        return this.x;
+    }
+
+    getY() {
+        return this.y;
     }
 
     getType() {
