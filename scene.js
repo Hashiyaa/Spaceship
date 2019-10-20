@@ -235,16 +235,20 @@ function LoadScene() {
             // if (distanceToShip(currGbg.getX(), currGbg.getY()) < 25) {
             var polygon = [[posX+46, posY-15], [posX+46, posY+65], [posX+98, posY+65], [posX+98, posY-15]];
             if (inside([currGbg.getX(), currGbg.getY()], polygon)) {
-                let hitting = new Audio("sound/hitting.wav");
-                hitting.load();
-                hitting.play();
+                
                 if (currGbg.type === currType) {
+                    let correct = new Audio("sound/correct.wav");
+                    correct.load();
+                    correct.play();
                     hp = hp + 100;
                     // delete garbageList[i];
                     // concurrent modification?
                     score++;
                     // console.log(document.getElementById("Score").value);
                 } else {
+                    let hitting = new Audio("sound/hitting.wav");
+                    hitting.load();
+                    hitting.play();
                     if(hp>60) hp = hp - 60;
                     else hp=0;
                     skull = currGbg;
