@@ -156,7 +156,7 @@ function LoadScene() {
         pan.src = "images/dustpan.png";
         context.drawImage(pan, x + 48, y - 30);
         // console.log(img.width);
-        context.drawImage(img, x, y);  
+        context.drawImage(img, x + 20, y + 10);  
         // img.onload = function() {
         //     context.drawImage(img, 100, 100);
         // };
