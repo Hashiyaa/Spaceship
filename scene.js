@@ -126,6 +126,7 @@ function LoadScene() {
         context.fillText("Score: " + score, 70, 30);
         context.fillText("Highest Score: " + hscore, 140, 30);
         context.fillText("History Highest: " + localStorage.getItem("highestScore"), 250, 30);
+        context.fillText("Energy", 155, 60);
         context.restore();
 
         let type_img = new Image();
