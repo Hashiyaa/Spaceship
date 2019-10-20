@@ -69,6 +69,12 @@ Button{
     transform:translate(-50%,0px);
 }
 
+#AgainButton{
+    top:500px;
+    height: 80px;
+    width: 250px;
+}
+
 #ScoreText{
     position: absolute;
     font-weight: 500;
