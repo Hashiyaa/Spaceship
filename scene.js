@@ -21,7 +21,7 @@ let garbage_types = [];
 
 let main = document.getElementById("main");
 let score = 0;
-let hp = 100;
+let hp = 3000;
 
 function LoadScene() {
     let x = 200;
@@ -42,23 +42,20 @@ function LoadScene() {
 
     ButtonDisappear();
 
-    function LoadEnergy(){
-        context.save();
-        let energy = document.createElement("progress");
-        let energypic = document.createElement("img");
+    let energy = document.createElement("progress");
+    let energypic = document.createElement("img");
 
-        energypic.src = "images/energy.png";
+    energypic.src = "images/energy.png";
 
-        energypic.setAttribute("id","Energy_Img");
-        energy.setAttribute("id","Energy");
+    energypic.setAttribute("id","Energy_Img");
+    energy.setAttribute("id","Energy");
 
-        energy.max = 100;
-        energy.value = 50;
-        
-        main.appendChild(energy);
-        main.appendChild(energypic);
-    }
-    LoadEnergy();
+    energy.max = 3000;
+    energy.value = 0;
+    
+    main.appendChild(energy);
+    main.appendChild(energypic);
+
     garbage_types.push(household_food_waste);
     garbage_types.push(residual_waste);
     garbage_types.push(recyclable_waste);
@@ -101,6 +98,9 @@ function LoadScene() {
         context.restore();
 
         detectCollision(); // check for collision between spaceship and garbage constantly
+        hp--;
+        energy.value = hp;
+        console.log(hp);
         window.requestAnimationFrame(draw);
     }
     draw();
@@ -165,14 +165,23 @@ function LoadScene() {
         for (i = 0; i < garbageList.length; i++) {
             // let gbgX = garbageList[i].getX() + garbageList[i].
             let currGbg = garbageList[i];
-            if (distanceToShip(currGbg.getX(), currGbg.getY()) < 20 && currGbg.type === currType) {
+
+            if (distanceToShip(currGbg.getX(), currGbg.getY()) < 20) {
+                
+                if (currGbg.type === currType) {
+                    hp = hp + 100;
+                    // delete garbageList[i];
+                    // concurrent modification?
+                    // TODO: increment score
+                    score++;
+                    // console.log(document.getElementById("Score").value);
+                } else {
+                    hp = hp - 60;
+                    let img = new Image();
+                    img.src = "images/skull.png";
+                    context.drawImage(img,currGbg.getX(),currGbg.getY());
+                }
                 garbageList.splice(i, 1); // remove garbage from canvas
-                hp++;
-                // delete garbageList[i];
-                // concurrent modification?
-                // TODO: increment score
-                score++;
-                // console.log(document.getElementById("Score").value);
             }
         }
     }
