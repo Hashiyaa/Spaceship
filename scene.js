@@ -27,6 +27,8 @@ let skull = null;
 let skullTimer = 0;
 
 function LoadScene() {
+    document.getElementById("music").play();
+
     if(document.getElementById("AgainButton") != null) document.getElementById("AgainButton").remove();
     if(document.getElementById("ScoreText") != null) document.getElementById("ScoreText").remove();
     if(document.getElementById("GameOverStr") != null) document.getElementById("GameOverStr").remove();
