@@ -39,10 +39,7 @@ function LoadScene() {
     let img = new Image(); // Create new img element
     img.src = 'images/spaceship.png'; // Set source path
 
-    function ButtonDisappear(){
-        document.getElementById("StartButton").remove();
-        document.getElementById("SettingButton").remove();
-    }
+
     ButtonDisappear();
 
     function LoadEnergy(){
@@ -214,6 +211,10 @@ function LoadScene() {
         dirX = 0;
         dirY = 0;
     }
+
+ 
+    
+
 }
 
 window.onload = function(){
@@ -236,12 +237,36 @@ window.onload = function(){
 
     main.appendChild(StartButton);
     main.appendChild(SettingButton);
+
+    
+
+}
+function ButtonDisappear(){
+    document.getElementById("StartButton").remove();
+    document.getElementById("SettingButton").remove();
 }
 
 function Settings(){
-
+    ButtonDisappear();
+    gameover();
 }
+
 function gameover(){
+    let context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.save();
+    let gameover_str = document.createElement("pre");
+    let scoretext = document.createElement("pre");
+
+    scoretext.innerHTML = "Score:"+score;
+    gameover_str.innerHTML = "GAME OVER";
+
+    scoretext.setAttribute("id","ScoreText");
+    gameover_str.setAttribute("id","GameOverStr");
+    
+    let mainframe = document.getElementById("main");
+
+    mainframe.appendChild(gameover_str);
+    mainframe.appendChild(scoretext);
+    context.restore();
 }
