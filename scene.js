@@ -22,6 +22,8 @@ let garbage_types = [];
 let main = document.getElementById("main");
 let score = 0;
 let hp = 3000;
+let skull = null;
+let skullTimer = 0;
 
 function LoadScene() {
     let x = 200;
@@ -84,6 +86,20 @@ function LoadScene() {
             generationCount = 0;
         }
         draw_garbage();
+
+        if (skull != null) {
+            if (skullTimer < 50) {
+                let skullImg = new Image();
+                skullImg.src = "images/skull.png";
+                context.drawImage(skullImg,skull.getX() - 0.5 * skull.getWidth(), 
+                    skull.getY() - skull.getHeight());
+                skullTimer++;
+            } else {
+                skull = null;
+                skullTimer = 0;
+            }
+        }
+        
         for(let i=0;i<garbageList.length;i++){
             let g = garbageList[i];
             if(g.getY()>600 + g.getHeight()){
@@ -180,9 +196,7 @@ function LoadScene() {
                     // console.log(document.getElementById("Score").value);
                 } else {
                     hp = hp - 60;
-                    let img = new Image();
-                    img.src = "images/skull.png";
-                    context.drawImage(img,currGbg.getX(),currGbg.getY());
+                    skull = currGbg;
                 }
                 garbageList.splice(i, 1); // remove garbage from canvas
             }
