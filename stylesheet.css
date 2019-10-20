@@ -4,6 +4,7 @@ canvas {
     margin-left: auto;
     margin-right: auto;
     display: block;
+    background-image: url("images/background.jpg");
 }
 
 Button{
@@ -54,4 +55,26 @@ Button{
     left: 50%;
     transform:translate(-764%,0px);
     top:80px;
+}
+
+#GameOverStr{
+    position: absolute;
+    font-weight: 700px;
+    left: 50%;
+    top:150px;
+    font-family: fantasy;
+    color: yellow;
+    font-size: 100px;
+    transform:translate(-50%,0px);
+}
+
+#ScoreText{
+    position: absolute;
+    font-weight: 500;
+    font-family: fantasy;
+    left: 50%;
+    top:350px;
+    color: yellow;
+    font-size: 38px;
+    transform:translate(-50%,0px);
 }
