@@ -296,9 +296,6 @@ function LoadScene() {
         dirY = 0;
     }
 
- 
-    
-
 }
 
 window.onload = function(){
@@ -314,23 +311,23 @@ window.onload = function(){
     SettingButton.innerHTML = "SETTINGS";
 
     StartButton.onclick = LoadScene;
-    SettingButton.onclick = Settings;
+    SettingButton.onclick = showScoreBoard;
 
     StartButton.setAttribute("id","StartButton");
     SettingButton.setAttribute("id","SettingButton");
 
     main.appendChild(StartButton);
     main.appendChild(SettingButton);
-
-    
-
 }
+
 function ButtonDisappear(){
     if(document.getElementById("StartButton") != null) document.getElementById("StartButton").remove();
     if(document.getElementById("SettingButton") != null) document.getElementById("SettingButton").remove();
 }
 
-function Settings(){
+function showScoreBoard(){
+    // let scoreBoard = document.createElement("table");
+    // scoreBoard.setAttribute
 }
 
 function gameover(){
@@ -346,18 +343,23 @@ function gameover(){
     let gameover_str = document.createElement("pre");
     let scoretext = document.createElement("pre");
     let tryagain = document.createElement("button");
+    let quit = document.createElement("button");
 
-    scoretext.innerHTML = "Score: "+score;
+    scoretext.innerHTML = "Score: "+ score;
     tryagain.innerHTML = "TRY AGAIN";
+    quit.innerHTML = "QUIT";
     gameover_str.innerHTML = "GAME OVER";
 
+    quit.setAttribute("id","QuitButton");
     tryagain.setAttribute("id","AgainButton");
     scoretext.setAttribute("id","ScoreText");
     gameover_str.setAttribute("id","GameOverStr");
     tryagain.onclick = LoadScene;
+    quit.onclick = showScoreBoard;
     
     let mainframe = document.getElementById("main");
 
+    mainframe.appendChild(quit);
     mainframe.appendChild(tryagain);
     mainframe.appendChild(gameover_str);
     mainframe.appendChild(scoretext);
