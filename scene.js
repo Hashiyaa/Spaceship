@@ -12,7 +12,6 @@ let collector_Types = ['household_food_waste','residual_waste','recyclable_waste
 let currIndex = 0;
 let currType = collector_Types[0];
 
-
 let garbageList = [];
 let household_food_waste = ['apple','bone','cheese','fish','watermelon'];
 let residual_waste = ['cup'];
@@ -20,10 +19,17 @@ let recyclable_waste = ['can','soda'];
 let hazardous_waste = ['battery','bulb'];
 let garbage_types = [];
 
+let main = document.getElementById("main");
+let score = 0;
+
 function LoadScene() {
     let x = 200;
     let y = 200;
     let generationRate = 100;
+    let scoreText = document.createElement("P");
+    scoreText.setAttribute("value", "Score:");
+    scoreText.setAttribute("id","scoreText");
+    main.appendChild(scoreText);
 
     let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
     let context = canvas.getContext("2d");
@@ -43,7 +49,7 @@ function LoadScene() {
         energy.setAttribute("id","Energy");
         energy.max = 100;
         energy.value = 50;
-        MainFrame.appendChild(energy);
+        main.appendChild(energy);
     }
     LoadEnergy();
     garbage_types.push(household_food_waste);
@@ -83,6 +89,8 @@ function LoadScene() {
         context.arc(73 + posX, posY + 30, 5, 0, Math.PI * 2, false);
         context.fill();
         context.fillText("Current Type: " + currType, 400, 30);
+        context.fillText("Score: " + score, 100, 30);
+        context.fillText("Highest Score: " + score, 200, 30);
         context.restore();
 
         detectCollision(); // check for collision between spaceship and garbage constantly
@@ -96,7 +104,7 @@ function LoadScene() {
 
 
         ship_Width = img.width;
-        console.log(img.width);
+        // console.log(img.width);
         context.drawImage(img, x, y);        
         // img.onload = function() {
         //     context.drawImage(img, 100, 100);
@@ -125,8 +133,8 @@ function LoadScene() {
         
         let img = new Image();
         img.src = "images/" + name + ".png";
-        console.log(img.width);
-        let randomX = Math.floor(Math.random()*526+37.5);
+        // console.log(img.width);
+        let randomX = Math.floor(Math.random()*451+75);
         
         let randomVelocity = Math.random()*1.5+0.5;
         let gbg = new garbage(randomX,0,type,name,randomVelocity); // hard code
@@ -155,6 +163,8 @@ function LoadScene() {
                 // delete garbageList[i];
                 // concurrent modification?
                 // TODO: increment score
+                score++;
+                // console.log(document.getElementById("Score").value);
             }
         }
     }
@@ -200,7 +210,6 @@ window.onload = function(){
     let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
     let ctx = canvas.getContext('2d');
 
-    let MainFrame = document.getElementById("MainFrame");
     //Create Buttons
     let StartButton = document.createElement("button");
     let SettingButton = document.createElement("button");
@@ -214,8 +223,8 @@ window.onload = function(){
     StartButton.setAttribute("id","StartButton");
     SettingButton.setAttribute("id","SettingButton");
 
-    MainFrame.appendChild(StartButton);
-    MainFrame.appendChild(SettingButton);
+    main.appendChild(StartButton);
+    main.appendChild(SettingButton);
 }
 
 function Settings(){
