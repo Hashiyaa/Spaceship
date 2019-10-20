@@ -107,6 +107,7 @@ function LoadScene() {
         }
         context.beginPath();
         context.arc(73 + posX, posY + 30, 5, 0, Math.PI * 2, false);
+        context.fillStyle = "White";
         context.fill();
         context.fillText("Current Type: " + currType, 400, 30);
         context.fillText("Score: " + score, 100, 30);
