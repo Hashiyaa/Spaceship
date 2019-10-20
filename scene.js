@@ -172,14 +172,14 @@ function LoadScene() {
             if (distanceToShip(currGbg.getX(), currGbg.getY()) < 20) {
                 if (currGbg.type === currType) {
                     garbageList.splice(i, 1); // remove garbage from canvas
-                    hp = hp + 50;
+                    hp = hp + 100;
                     // delete garbageList[i];
                     // concurrent modification?
                     // TODO: increment score
                     score++;
                     // console.log(document.getElementById("Score").value);
                 } else {
-                    hp = hp - 100;
+                    hp = hp - 60;
                 }
             }
         }
