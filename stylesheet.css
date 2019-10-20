@@ -23,7 +23,7 @@ Button{
 }
 
 #StartButton{
-    top:350px;
+    top:400px;
 }
 
 #SettingButton{ 
@@ -55,14 +55,14 @@ Button{
     position: absolute;
     left: 50%;
     transform:translate(-764%,0px);
-    top:80px;
+    top:180px;
 }
 
 #GameOverStr{
     position: absolute;
     font-weight: 600px;
     left: 50%;
-    top:120px;
+    top:170px;
     font-family: fantasy;
     color: yellow;
     font-size: 90px;
@@ -70,13 +70,13 @@ Button{
 }
 
 #AgainButton{
-    top:450px;
+    top:500px;
     height: 70px;
     width: 250px;
 }
 
 #QuitButton{
-    top:550px;
+    top:600px;
     height: 70px;
     width: 250px;
 }
@@ -86,7 +86,7 @@ Button{
     font-weight: 500;
     font-family: fantasy;
     left: 50%;
-    top:300px;
+    top:350px;
     color: yellow;
     font-size: 38px;
     transform:translate(-50%,0px);
