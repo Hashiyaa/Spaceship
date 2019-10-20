@@ -124,6 +124,7 @@ function LoadScene() {
         context.fillText("Current Type: " + currType, 400, 30);
         context.fillText("Score: " + score, 100, 30);
         context.fillText("Highest Score: " + hscore, 200, 30);
+        context.fillText("Energy", 155, 60);
         context.restore();
 
         let type_img = new Image();
