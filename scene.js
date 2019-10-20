@@ -125,7 +125,11 @@ function LoadScene() {
         context.fillText("Current Type: " + currType, 400, 30);
         context.fillText("Score: " + score, 70, 30);
         context.fillText("Highest Score: " + hscore, 140, 30);
-        context.fillText("History Highest: " + localStorage.getItem("highestScore"), 250, 30);
+        if (localStorage.getItem("highestScore") != null) {
+            context.fillText("History Highest: " + localStorage.getItem("highestScore"), 250, 30);
+        } else {
+            context.fillText("History Highest: " + 0, 250, 30);
+        }
         context.fillText("Energy", 155, 60);
         context.restore();
 
