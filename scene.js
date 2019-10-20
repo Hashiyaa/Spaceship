@@ -94,7 +94,7 @@ function LoadScene() {
             } else {
                 skull = null;
                 skullTimer = 0;
-            }
+            }µ
         }
         
         for(let i=0;i<garbageList.length;i++){
@@ -120,9 +120,11 @@ function LoadScene() {
         // img.src = 'images/spaceship.png'; // Set source path
 
         detectCollision(); // check for collision between spaceship and garbage constantly
-        hp--;
+        if (hp >= 0) {
+            hp--;
+        }
         energy.value = hp;
-        console.log(hp);
+        // console.log(hp);
         window.requestAnimationFrame(draw);
     }
     draw();
