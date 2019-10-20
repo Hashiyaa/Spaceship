@@ -231,7 +231,7 @@ function LoadScene() {
             let currGbg = garbageList[i];
 
             // if (distanceToShip(currGbg.getX(), currGbg.getY()) < 25) {
-            var polygon = [[posX+46, posY-75], [posX+46, posY], [posX+98, posY], [posX+98, posY-75]];
+            var polygon = [[posX+46, posY-40], [posX+46, posY+40], [posX+98, posY+40], [posX+98, posY-40]];
             if (inside([currGbg.getX(), currGbg.getY()], polygon)) {
 
                 // 
