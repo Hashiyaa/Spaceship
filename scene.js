@@ -324,8 +324,6 @@ function ButtonDisappear(){
 }
 
 function Settings(){
-    ButtonDisappear();
-    gameover();
 }
 
 function gameover(){
