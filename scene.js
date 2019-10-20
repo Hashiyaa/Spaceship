@@ -1,12 +1,11 @@
 import garbage from "./garbage.js";
 
-let posX = 200;
-let posY = 200;
+let posX = 220;
+let posY = 400;
 let dirX = 0;
 let dirY = 0;
 let speed = 10;
 let generationCount = 100;
-let ship_Width = -1;
 let GameIsOver = false;
 
 let collector_Types = ['household_food_waste','residual_waste','recyclable_waste','hazardous_waste'];
@@ -73,6 +72,7 @@ function LoadScene() {
     garbage_types.push(hazardous_waste);
 
     function draw() {
+        if(GameIsOver===true)  return;
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
 
@@ -81,7 +81,7 @@ function LoadScene() {
         if ((posX >= 0 && dirX < 0) || (posX <= 600 - img.width && dirX > 0)) {
             posX += dirX * speed;
         }
-        if ((posY >= 0 && dirY < 0) || (posY <= 600 - img.height && dirY > 0)) {
+        if ((posY >= 200 && dirY < 0) || (posY <= 600 - img.height && dirY > 0)) {
             posY += dirY * speed;
         }
         // console.log("x: " + posX + " y: " + posY);
@@ -126,7 +126,7 @@ function LoadScene() {
 
         let type_img = new Image();
         type_img.src = 'images/'.concat(currType, '.png');
-        if(GameIsOver===false) context.drawImage(type_img, posX+50, posY+50); 
+        context.drawImage(type_img, posX+53, posY-30); 
         //     let img = new Image(); // Create new img element
         // img.src = 'images/spaceship.png'; // Set source path
 
@@ -152,13 +152,11 @@ function LoadScene() {
         if(GameIsOver) return;
         context.save();
         // context.translate(-100, -100); // hard code
-
-        ship_Width = img.width;
-        // console.log(img.width);
-        context.drawImage(img, x, y);  
         let pan = new Image();
         pan.src = "images/dustpan.png";
-        context.drawImage(pan, x + 47, y - 30);      
+        context.drawImage(pan, x + 48, y - 30);
+        // console.log(img.width);
+        context.drawImage(img, x, y);  
         // img.onload = function() {
         //     context.drawImage(img, 100, 100);
         // };
@@ -320,8 +318,8 @@ window.onload = function(){
 
 }
 function ButtonDisappear(){
-    document.getElementById("StartButton").remove();
-    document.getElementById("SettingButton").remove();
+    if(document.getElementById("StartButton") != null) document.getElementById("StartButton").remove();
+    if(document.getElementById("SettingButton") != null) document.getElementById("SettingButton").remove();
 }
 
 function Settings(){
@@ -332,7 +330,10 @@ function Settings(){
 function gameover(){
     GameIsOver = true;
     garbageList = [];
-    
+
+    if(document.getElementById("Energy_Img")!= null)  document.getElementById("Energy_Img").remove();
+    if(document.getElementById("Energy")!= null)  document.getElementById("Energy").remove();
+
     let context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.save();
@@ -340,7 +341,7 @@ function gameover(){
     let scoretext = document.createElement("pre");
     let tryagain = document.createElement("button");
 
-    scoretext.innerHTML = "Score:"+score;
+    scoretext.innerHTML = "Score: "+score;
     tryagain.innerHTML = "TRY AGAIN";
     gameover_str.innerHTML = "GAME OVER";
 
