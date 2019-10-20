@@ -56,6 +56,7 @@ function LoadScene() {
 
         energy.max = 100;
         energy.value = 50;
+        
         main.appendChild(energy);
         main.appendChild(energypic);
     }
