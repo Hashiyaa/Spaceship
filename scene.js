@@ -87,6 +87,10 @@ function LoadScene() {
         // console.log("x: " + posX + " y: " + posY);
         
         drawSpaceship(posX, posY, img);
+        context.beginPath();
+        context.arc(73 + posX, posY - 20, 5, 0, Math.PI * 2, false);
+        context.fill();
+        
         if(generationCount>=generationRate){
             generate_garbage();
             generationCount = 0;
@@ -114,10 +118,7 @@ function LoadScene() {
                 g.setY(g.getY()+g.getVelocity());
             }
         }
-        context.beginPath();
-        context.arc(73 + posX, posY + 30, 5, 0, Math.PI * 2, false);
-        context.fillStyle = "White";
-        context.fill();
+        context.fillStyle = "white";
         context.fillText("Current Type: " + currType, 400, 30);
         context.fillText("Score: " + score, 100, 30);
         context.fillText("Highest Score: " + hscore, 200, 30);
@@ -152,10 +153,12 @@ function LoadScene() {
         context.save();
         // context.translate(-100, -100); // hard code
 
-
         ship_Width = img.width;
         // console.log(img.width);
-        context.drawImage(img, x, y);        
+        context.drawImage(img, x, y);  
+        let pan = new Image();
+        pan.src = "images/dustpan.png";
+        context.drawImage(pan, x + 47, y - 30);      
         // img.onload = function() {
         //     context.drawImage(img, 100, 100);
         // };
@@ -230,7 +233,7 @@ function LoadScene() {
 
     function distanceToShip(x, y) {
         
-        return Math.sqrt(Math.pow(73 + posX - x, 2) + Math.pow(posY + 30 - y, 2));
+        return Math.sqrt(Math.pow(73 + posX - x, 2) + Math.pow(posY - 20 - y, 2));
     }
 
     window.onkeydown = function(event) {
