@@ -170,8 +170,8 @@ function LoadScene() {
             let currGbg = garbageList[i];
 
             if (distanceToShip(currGbg.getX(), currGbg.getY()) < 20) {
+                
                 if (currGbg.type === currType) {
-                    garbageList.splice(i, 1); // remove garbage from canvas
                     hp = hp + 100;
                     // delete garbageList[i];
                     // concurrent modification?
@@ -180,7 +180,11 @@ function LoadScene() {
                     // console.log(document.getElementById("Score").value);
                 } else {
                     hp = hp - 60;
+                    let img = new Image();
+                    img.src = "images/skull.png";
+                    context.drawImage(img,currGbg.getX(),currGbg.getY());
                 }
+                garbageList.splice(i, 1); // remove garbage from canvas
             }
         }
     }
