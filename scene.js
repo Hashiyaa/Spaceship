@@ -300,8 +300,8 @@ window.onload = function(){
 
 }
 function ButtonDisappear(){
-    document.getElementById("StartButton").remove();
-    document.getElementById("SettingButton").remove();
+    if(document.getElementById("StartButton") != null) document.getElementById("StartButton").remove();
+    if(document.getElementById("SettingButton") != null) document.getElementById("SettingButton").remove();
 }
 
 function Settings(){
