@@ -21,6 +21,7 @@ let garbage_types = [];
 
 let main = document.getElementById("main");
 let score = 0;
+let hp = 100;
 
 function LoadScene() {
     let x = 200;
@@ -167,6 +168,7 @@ function LoadScene() {
             let currGbg = garbageList[i];
             if (distanceToShip(currGbg.getX(), currGbg.getY()) < 20 && currGbg.type === currType) {
                 garbageList.splice(i, 1); // remove garbage from canvas
+                hp++;
                 // delete garbageList[i];
                 // concurrent modification?
                 // TODO: increment score
