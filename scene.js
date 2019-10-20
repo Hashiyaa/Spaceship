@@ -1,12 +1,11 @@
 import garbage from "./garbage.js";
 
-let posX = 200;
-let posY = 200;
+let posX = 220;
+let posY = 400;
 let dirX = 0;
 let dirY = 0;
 let speed = 10;
 let generationCount = 100;
-let ship_Width = -1;
 let GameIsOver = false;
 
 let collector_Types = ['household_food_waste','residual_waste','recyclable_waste','hazardous_waste'];
@@ -81,7 +80,7 @@ function LoadScene() {
         if ((posX >= 0 && dirX < 0) || (posX <= 600 - img.width && dirX > 0)) {
             posX += dirX * speed;
         }
-        if ((posY >= 0 && dirY < 0) || (posY <= 600 - img.height && dirY > 0)) {
+        if ((posY >= 200 && dirY < 0) || (posY <= 600 - img.height && dirY > 0)) {
             posY += dirY * speed;
         }
         // console.log("x: " + posX + " y: " + posY);
@@ -152,13 +151,11 @@ function LoadScene() {
         if(GameIsOver) return;
         context.save();
         // context.translate(-100, -100); // hard code
-
-        ship_Width = img.width;
-        // console.log(img.width);
-        context.drawImage(img, x, y);  
         let pan = new Image();
         pan.src = "images/dustpan.png";
-        context.drawImage(pan, x + 47, y - 30);      
+        context.drawImage(pan, x + 48, y - 30);
+        // console.log(img.width);
+        context.drawImage(img, x, y);  
         // img.onload = function() {
         //     context.drawImage(img, 100, 100);
         // };
@@ -319,7 +316,7 @@ function gameover(){
     let scoretext = document.createElement("pre");
     let tryagain = document.createElement("button");
 
-    scoretext.innerHTML = "Score:"+score;
+    scoretext.innerHTML = "Score: "+score;
     tryagain.innerHTML = "TRY AGAIN";
     gameover_str.innerHTML = "GAME OVER";
 
