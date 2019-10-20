@@ -126,7 +126,7 @@ function LoadScene() {
 
         let type_img = new Image();
         type_img.src = 'images/'.concat(currType, '.png');
-        context.drawImage(type_img, posX+50, posY+50); 
+        context.drawImage(type_img, posX+53, posY-30); 
         //     let img = new Image(); // Create new img element
         // img.src = 'images/spaceship.png'; // Set source path
 
