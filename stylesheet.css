@@ -60,18 +60,24 @@ Button{
 
 #GameOverStr{
     position: absolute;
-    font-weight: 700px;
+    font-weight: 600px;
     left: 50%;
-    top:150px;
+    top:120px;
     font-family: fantasy;
     color: yellow;
-    font-size: 100px;
+    font-size: 90px;
     transform:translate(-50%,0px);
 }
 
 #AgainButton{
-    top:500px;
-    height: 80px;
+    top:450px;
+    height: 70px;
+    width: 250px;
+}
+
+#QuitButton{
+    top:550px;
+    height: 70px;
     width: 250px;
 }
 
@@ -80,7 +86,7 @@ Button{
     font-weight: 500;
     font-family: fantasy;
     left: 50%;
-    top:350px;
+    top:300px;
     color: yellow;
     font-size: 38px;
     transform:translate(-50%,0px);
