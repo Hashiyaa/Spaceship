@@ -100,6 +100,12 @@ function LoadScene() {
         context.fillText("Highest Score: " + score, 200, 30);
         context.restore();
 
+        let type_img = new Image();
+        type_img.src = 'images/'.concat(currType, '.png');
+        context.drawImage(type_img, posX+50, posY+50); 
+        //     let img = new Image(); // Create new img element
+        // img.src = 'images/spaceship.png'; // Set source path
+
         detectCollision(); // check for collision between spaceship and garbage constantly
         hp--;
         energy.value = hp;
@@ -175,7 +181,6 @@ function LoadScene() {
                     hp = hp + 100;
                     // delete garbageList[i];
                     // concurrent modification?
-                    // TODO: increment score
                     score++;
                     // console.log(document.getElementById("Score").value);
                 } else {
