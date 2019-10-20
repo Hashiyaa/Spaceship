@@ -193,6 +193,25 @@ function LoadScene() {
         garbageList.push(gbg);
     }
 
+    function inside(point, vs) {
+        // ray-casting algorithm based on
+        // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+    
+        var x = point[0], y = point[1];
+    
+        var inside = false;
+        for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+            var xi = vs[i][0], yi = vs[i][1];
+            var xj = vs[j][0], yj = vs[j][1];
+    
+            var intersect = ((yi > y) != (yj > y))
+                && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+            if (intersect) inside = !inside;
+        }
+    
+        return inside;
+    };
+
     function draw_garbage(){
         context.save();
         for(let i = 0; i < garbageList.length; i++) {
@@ -211,8 +230,12 @@ function LoadScene() {
             // let gbgX = garbageList[i].getX() + garbageList[i].
             let currGbg = garbageList[i];
 
-            if (distanceToShip(currGbg.getX(), currGbg.getY()) < 20) {
-                
+            // if (distanceToShip(currGbg.getX(), currGbg.getY()) < 25) {
+            var polygon = [[posX+46, posY-15], [posX+46, posY+65], [posX+98, posY+65], [posX+98, posY-15]];
+            if (inside([currGbg.getX(), currGbg.getY()], polygon)) {
+                let hitting = new Audio("sound/hitting.wav");
+                hitting.load();
+                hitting.play();
                 if (currGbg.type === currType) {
                     hp = hp + 100;
                     // delete garbageList[i];
@@ -230,7 +253,6 @@ function LoadScene() {
     }
 
     function distanceToShip(x, y) {
-        
         return Math.sqrt(Math.pow(73 + posX - x, 2) + Math.pow(posY - 20 - y, 2));
     }
 
@@ -302,8 +324,6 @@ function ButtonDisappear(){
 }
 
 function Settings(){
-    ButtonDisappear();
-    gameover();
 }
 
 function gameover(){
