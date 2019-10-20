@@ -7,6 +7,7 @@ let dirY = 0;
 let speed = 10;
 let generationCount = 100;
 let ship_Width = -1;
+let GameIsOver = false;
 
 let collector_Types = ['household_food_waste','residual_waste','recyclable_waste','hazardous_waste'];
 let currIndex = 0;
@@ -21,12 +22,18 @@ let garbage_types = [];
 
 let main = document.getElementById("main");
 let score = 0;
+let hscore = 0;
 let hp = 3000;
 let skull = null;
 let skullTimer = 0;
 
 function LoadScene() {
+    if(document.getElementById("AgainButton") != null) document.getElementById("AgainButton").remove();
+    if(document.getElementById("ScoreText") != null) document.getElementById("ScoreText").remove();
+    if(document.getElementById("GameOverStr") != null) document.getElementById("GameOverStr").remove();
+
     hp=3000;
+    GameIsOver = false;
     score = 0;
     let x = 200;
     let y = 200;
@@ -96,7 +103,7 @@ function LoadScene() {
             } else {
                 skull = null;
                 skullTimer = 0;
-            }µ
+            }
         }
         
         for(let i=0;i<garbageList.length;i++){
@@ -113,7 +120,7 @@ function LoadScene() {
         context.fill();
         context.fillText("Current Type: " + currType, 400, 30);
         context.fillText("Score: " + score, 100, 30);
-        context.fillText("Highest Score: " + score, 200, 30);
+        context.fillText("Highest Score: " + hscore, 200, 30);
         context.restore();
 
         let type_img = new Image();
@@ -123,18 +130,25 @@ function LoadScene() {
         // img.src = 'images/spaceship.png'; // Set source path
 
         detectCollision(); // check for collision between spaceship and garbage constantly
-        if (hp >= 0) {
+        if (hp > 0) {
             hp--;
         }
         energy.value = hp;
-        // console.log(hp);
-        window.requestAnimationFrame(draw);
+        //console.log(hp);
+        
+        if(score > hscore) hscore = score;
 
-        if(hp <= 0) gameover();
+        if(hp === 0) {
+            gameover();
+            hp=-1;
+        }
+
+        window.requestAnimationFrame(draw);
     }
     draw();
 
     function drawSpaceship(x, y, img) {
+        if(GameIsOver) return;
         context.save();
         // context.translate(-100, -100); // hard code
 
@@ -149,6 +163,7 @@ function LoadScene() {
     }
 
     function generate_garbage(){
+        if(GameIsOver) return;
         let index = Math.floor(Math.random()*4);
         let type = '';
         if(index===0){
@@ -204,7 +219,8 @@ function LoadScene() {
                     score++;
                     // console.log(document.getElementById("Score").value);
                 } else {
-                    hp = hp - 60;
+                    if(hp>60) hp = hp - 60;
+                    else hp=0;
                     skull = currGbg;
                 }
                 garbageList.splice(i, 1); // remove garbage from canvas
@@ -290,6 +306,9 @@ function Settings(){
 }
 
 function gameover(){
+    GameIsOver = true;
+    garbageList = [];
+    
     let context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.save();
