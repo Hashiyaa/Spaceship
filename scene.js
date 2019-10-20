@@ -29,6 +29,7 @@ let skullTimer = 0;
 function LoadScene() {
     document.getElementById("music").play();
 
+    if(document.getElementById("QuitButton") != null) document.getElementById("QuitButton").remove();
     if(document.getElementById("AgainButton") != null) document.getElementById("AgainButton").remove();
     if(document.getElementById("ScoreText") != null) document.getElementById("ScoreText").remove();
     if(document.getElementById("GameOverStr") != null) document.getElementById("GameOverStr").remove();
@@ -122,8 +123,9 @@ function LoadScene() {
         }
         context.fillStyle = "white";
         context.fillText("Current Type: " + currType, 400, 30);
-        context.fillText("Score: " + score, 100, 30);
-        context.fillText("Highest Score: " + hscore, 200, 30);
+        context.fillText("Score: " + score, 70, 30);
+        context.fillText("Highest Score: " + hscore, 140, 30);
+        context.fillText("History Highest: " + localStorage.getItem("highestScore"), 250, 30);
         context.restore();
 
         let type_img = new Image();
@@ -297,26 +299,21 @@ function LoadScene() {
 
 }
 
-window.onload = function(){
+function start() {
     // Get canvas element and its context
     let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
     let ctx = canvas.getContext('2d');
 
     //Create Buttons
     let StartButton = document.createElement("button");
-    let SettingButton = document.createElement("button");
 
     StartButton.innerHTML = "START";
-    SettingButton.innerHTML = "SETTINGS";
 
     StartButton.onclick = LoadScene;
-    SettingButton.onclick = showScoreBoard;
 
     StartButton.setAttribute("id","StartButton");
-    SettingButton.setAttribute("id","SettingButton");
 
     main.appendChild(StartButton);
-    main.appendChild(SettingButton);
 }
 
 function ButtonDisappear(){
@@ -324,15 +321,19 @@ function ButtonDisappear(){
     if(document.getElementById("SettingButton") != null) document.getElementById("SettingButton").remove();
 }
 
-function showScoreBoard(){
-    // let scoreBoard = document.createElement("table");
-    // scoreBoard.setAttribute
+function quitGame() {
+    if(document.getElementById("QuitButton") != null) document.getElementById("QuitButton").remove();
+    if(document.getElementById("AgainButton") != null) document.getElementById("AgainButton").remove();
+    if(document.getElementById("ScoreText") != null) document.getElementById("ScoreText").remove();
+    if(document.getElementById("GameOverStr") != null) document.getElementById("GameOverStr").remove();
+    start();
 }
 
 function gameover(){
     GameIsOver = true;
     garbageList = [];
 
+    localStorage.setItem("highestScore", hscore);
     if(document.getElementById("Energy_Img")!= null)  document.getElementById("Energy_Img").remove();
     if(document.getElementById("Energy")!= null)  document.getElementById("Energy").remove();
 
@@ -354,7 +355,7 @@ function gameover(){
     scoretext.setAttribute("id","ScoreText");
     gameover_str.setAttribute("id","GameOverStr");
     tryagain.onclick = LoadScene;
-    quit.onclick = showScoreBoard;
+    quit.onclick = quitGame;
     
     let mainframe = document.getElementById("main");
 
@@ -364,3 +365,5 @@ function gameover(){
     mainframe.appendChild(scoretext);
     context.restore();
 }
+
+window.onload = start;
