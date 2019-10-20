@@ -73,6 +73,7 @@ function LoadScene() {
     garbage_types.push(hazardous_waste);
 
     function draw() {
+        if(GameIsOver===true)  return;
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
 
@@ -126,7 +127,7 @@ function LoadScene() {
 
         let type_img = new Image();
         type_img.src = 'images/'.concat(currType, '.png');
-        if(GameIsOver===false) context.drawImage(type_img, posX+50, posY+50); 
+        context.drawImage(type_img, posX+50, posY+50); 
         //     let img = new Image(); // Create new img element
         // img.src = 'images/spaceship.png'; // Set source path
 
@@ -311,7 +312,10 @@ function Settings(){
 function gameover(){
     GameIsOver = true;
     garbageList = [];
-    
+
+    if(document.getElementById("Energy_Img")!= null)  document.getElementById("Energy_Img").remove();
+    if(document.getElementById("Energy")!= null)  document.getElementById("Energy").remove();
+
     let context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.save();
