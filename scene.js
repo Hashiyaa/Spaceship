@@ -21,7 +21,7 @@ let garbage_types = [];
 
 let main = document.getElementById("main");
 let score = 0;
-let hp = 100;
+let hp = 1000;
 
 function LoadScene() {
     let x = 200;
