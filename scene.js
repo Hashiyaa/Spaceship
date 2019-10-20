@@ -233,8 +233,9 @@ function LoadScene() {
             // if (distanceToShip(currGbg.getX(), currGbg.getY()) < 25) {
             var polygon = [[posX+46, posY-15], [posX+46, posY+65], [posX+98, posY+65], [posX+98, posY-15]];
             if (inside([currGbg.getX(), currGbg.getY()], polygon)) {
-
-                // 
+                let hitting = new Audio("sound/hitting.wav");
+                hitting.load();
+                hitting.play();
                 if (currGbg.type === currType) {
                     hp = hp + 100;
                     // delete garbageList[i];
