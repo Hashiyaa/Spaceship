@@ -39,10 +39,7 @@ function LoadScene() {
     let img = new Image(); // Create new img element
     img.src = 'images/spaceship.png'; // Set source path
 
-    function ButtonDisappear(){
-        document.getElementById("StartButton").remove();
-        document.getElementById("SettingButton").remove();
-    }
+
     ButtonDisappear();
 
     let energy = document.createElement("progress");
@@ -176,8 +173,8 @@ function LoadScene() {
             let currGbg = garbageList[i];
 
             if (distanceToShip(currGbg.getX(), currGbg.getY()) < 20) {
+                
                 if (currGbg.type === currType) {
-                    garbageList.splice(i, 1); // remove garbage from canvas
                     hp = hp + 100;
                     // delete garbageList[i];
                     // concurrent modification?
@@ -185,7 +182,11 @@ function LoadScene() {
                     // console.log(document.getElementById("Score").value);
                 } else {
                     hp = hp - 60;
+                    let img = new Image();
+                    img.src = "images/skull.png";
+                    context.drawImage(img,currGbg.getX(),currGbg.getY());
                 }
+                garbageList.splice(i, 1); // remove garbage from canvas
             }
         }
     }
@@ -224,6 +225,10 @@ function LoadScene() {
         dirX = 0;
         dirY = 0;
     }
+
+ 
+    
+
 }
 
 window.onload = function(){
@@ -246,12 +251,36 @@ window.onload = function(){
 
     main.appendChild(StartButton);
     main.appendChild(SettingButton);
+
+    
+
+}
+function ButtonDisappear(){
+    document.getElementById("StartButton").remove();
+    document.getElementById("SettingButton").remove();
 }
 
 function Settings(){
-
+    ButtonDisappear();
+    gameover();
 }
+
 function gameover(){
+    let context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.save();
+    let gameover_str = document.createElement("pre");
+    let scoretext = document.createElement("pre");
+
+    scoretext.innerHTML = "Score:"+score;
+    gameover_str.innerHTML = "GAME OVER";
+
+    scoretext.setAttribute("id","ScoreText");
+    gameover_str.setAttribute("id","GameOverStr");
+    
+    let mainframe = document.getElementById("main");
+
+    mainframe.appendChild(gameover_str);
+    mainframe.appendChild(scoretext);
+    context.restore();
 }
