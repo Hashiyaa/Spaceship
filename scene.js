@@ -82,6 +82,7 @@ function LoadScene() {
         context.beginPath();
         context.arc(73 + posX, posY + 30, 5, 0, Math.PI * 2, false);
         context.fill();
+        context.fillText("Current Type: " + currType, 400, 30);
         context.restore();
 
         detectCollision(); // check for collision between spaceship and garbage constantly
