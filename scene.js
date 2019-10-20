@@ -26,6 +26,8 @@ let skull = null;
 let skullTimer = 0;
 
 function LoadScene() {
+    hp=3000;
+    score = 0;
     let x = 200;
     let y = 200;
     let generationRate = 100;
@@ -127,6 +129,8 @@ function LoadScene() {
         energy.value = hp;
         // console.log(hp);
         window.requestAnimationFrame(draw);
+
+        if(hp <= 0) gameover();
     }
     draw();
 
@@ -236,6 +240,9 @@ function LoadScene() {
             event.preventDefault();
             dirY = 1; //bottom arrow add 20 from current
         }
+        else if(keyPr === 8){
+            hp=0;
+        }
     };
 
     window.onkeyup = function(event) {
@@ -288,15 +295,20 @@ function gameover(){
     context.save();
     let gameover_str = document.createElement("pre");
     let scoretext = document.createElement("pre");
+    let tryagain = document.createElement("button");
 
     scoretext.innerHTML = "Score:"+score;
+    tryagain.innerHTML = "TRY AGAIN";
     gameover_str.innerHTML = "GAME OVER";
 
+    tryagain.setAttribute("id","AgainButton");
     scoretext.setAttribute("id","ScoreText");
     gameover_str.setAttribute("id","GameOverStr");
+    tryagain.onclick = LoadScene;
     
     let mainframe = document.getElementById("main");
 
+    mainframe.appendChild(tryagain);
     mainframe.appendChild(gameover_str);
     mainframe.appendChild(scoretext);
     context.restore();
