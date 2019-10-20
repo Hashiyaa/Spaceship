@@ -279,9 +279,11 @@ function LoadScene() {
         }
 
         if(keyPr === 39 || keyPr === 68) {  
+            event.preventDefault();
             dirX = 1; //right arrow add 20 from current
         }
         else if(keyPr === 37 || keyPr === 65) {
+            event.preventDefault();
             dirX = -1; //left arrow subtract 20 from current
         }
         else if(keyPr === 38  || keyPr === 87) {
@@ -293,6 +295,7 @@ function LoadScene() {
             dirY = 1; //bottom arrow add 20 from current
         }
         else if(keyPr === 8){
+            event.preventDefault();
             hp=0;
         }
     };
