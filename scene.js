@@ -45,8 +45,15 @@ function LoadScene() {
     ButtonDisappear();
 
     function LoadEnergy(){
+        context.save();
         let energy = document.createElement("progress");
+        let energypic = document.createElement("img");
+
+        energypic.src = "images/energy.png";
+
+        energypic.setAttribute("id","Energy_Img");
         energy.setAttribute("id","Energy");
+
         energy.max = 100;
         energy.value = 50;
         main.appendChild(energy);
@@ -230,4 +237,7 @@ window.onload = function(){
 function Settings(){
 
 }
-
+function gameover(){
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.save();
+}
