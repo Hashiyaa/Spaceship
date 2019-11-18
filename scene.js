@@ -28,6 +28,42 @@ let hp = 3000;
 let skull = null;
 let skullTimer = 0;
 
+window.onkeydown = function (event) {
+    var keyPr = event.keyCode; //Key code of key pressed
+
+    if (keyPr === 32) {
+        event.preventDefault();
+        currCollectorIndex = ((currCollectorIndex + 1) % 4);
+        currCollector = collectorTypes[currCollectorIndex];
+    }
+
+    if (keyPr === 39 || keyPr === 68) {
+        event.preventDefault();
+        dirX = 1; //right arrow add 20 from current
+    }
+    else if (keyPr === 37 || keyPr === 65) {
+        event.preventDefault();
+        dirX = -1; //left arrow subtract 20 from current
+    }
+    else if (keyPr === 38 || keyPr === 87) {
+        event.preventDefault();
+        dirY = -1; //top arrow subtract 20 from current
+    }
+    else if (keyPr === 40 || keyPr === 83) {
+        event.preventDefault();
+        dirY = 1; //bottom arrow add 20 from current
+    }
+    else if (keyPr === 8) {
+        event.preventDefault();
+        hp = 0;
+    }
+};
+
+window.onkeyup = function (event) {
+    dirX = 0;
+    dirY = 0;
+};
+
 function load() {
     // play music
     document.getElementById("music").play();
@@ -43,15 +79,15 @@ function load() {
     isOver = false;
     score = 0;
 
+    // set up the canvas
+    let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
+    let context = canvas.getContext("2d");
+
     // set up score text
     let scoreText = document.createElement("P");
     scoreText.setAttribute("value", "Score:");
     scoreText.setAttribute("id", "scoreText");
     page.appendChild(scoreText);
-
-    // set up the canvas
-    let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
-    let context = canvas.getContext("2d");
 
     // create new img element
     let img = new Image(); 
@@ -95,55 +131,6 @@ function load() {
         context.restore();
     }
 
-    function generate_garbage() {
-        if (isOver) return;
-        let index = Math.floor(Math.random() * 4);
-        let type = '';
-        if (index === 0) {
-            type = 'household_food_waste';
-        }
-        else if (index === 1) {
-            type = 'residual_waste';
-        }
-        else if (index === 2) {
-            type = 'recyclable_waste';
-        }
-        else {
-            type = 'hazardous_waste';
-        }
-        let temp = garbageTypes[index].length;
-        let subindex = Math.floor(Math.random() * temp);
-        let name = (garbageTypes[index])[subindex];
-
-        let img = new Image();
-        img.src = "images/" + name + ".png";
-        // console.log(img.width);
-        let randomX = Math.floor(Math.random() * 451 + 75);
-
-        let randomVelocity = Math.random() * 1.5 + 0.5;
-        let gbg = new garbage(randomX, 0, type, name, randomVelocity); // hard code
-        garbages.push(gbg);
-    }
-
-    function inside(point, vs) {
-        // ray-casting algorithm based on
-        // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-
-        var x = point[0], y = point[1];
-
-        var inside = false;
-        for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
-            var xi = vs[i][0], yi = vs[i][1];
-            var xj = vs[j][0], yj = vs[j][1];
-
-            var intersect = ((yi > y) != (yj > y))
-                && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-            if (intersect) inside = !inside;
-        }
-
-        return inside;
-    };
-
     function draw_garbage() {
         context.save();
         for (let i = 0; i < garbages.length; i++) {
@@ -154,74 +141,6 @@ function load() {
             context.drawImage(img, g.getX() - g.getWidth() / 2, g.getY() - img.height * 3 / 2);
         }
         context.restore();
-    }
-
-    function detectCollision() {
-        var i;
-        for (i = 0; i < garbages.length; i++) {
-            // let gbgX = garbageList[i].getX() + garbageList[i].
-            let currGbg = garbages[i];
-
-            // if (distanceToShip(currGbg.getX(), currGbg.getY()) < 25) {
-            var polygon = [[posX + 46, posY - 15], [posX + 46, posY + 65], [posX + 98, posY + 65], [posX + 98, posY - 15]];
-            if (inside([currGbg.getX(), currGbg.getY()], polygon)) {
-
-                if (currGbg.type === currCollector) {
-                    let correct = new Audio("sound/correct.wav");
-                    correct.load();
-                    correct.play();
-                    hp = hp + 100;
-                    // delete garbageList[i];
-                    // concurrent modification?
-                    score++;
-                    // console.log(document.getElementById("Score").value);
-                } else {
-                    let hitting = new Audio("sound/hitting.wav");
-                    hitting.load();
-                    hitting.play();
-                    if (hp > 60) hp = hp - 60;
-                    else hp = 0;
-                    skull = currGbg;
-                }
-                garbages.splice(i, 1); // remove garbage from canvas
-            }
-        }
-    }
-
-    window.onkeydown = function (event) {
-        var keyPr = event.keyCode; //Key code of key pressed
-
-        if (keyPr === 32) {
-            event.preventDefault();
-            currCollectorIndex = ((currCollectorIndex + 1) % 4);
-            currCollector = collectorTypes[currCollectorIndex];
-        }
-
-        if (keyPr === 39 || keyPr === 68) {
-            event.preventDefault();
-            dirX = 1; //right arrow add 20 from current
-        }
-        else if (keyPr === 37 || keyPr === 65) {
-            event.preventDefault();
-            dirX = -1; //left arrow subtract 20 from current
-        }
-        else if (keyPr === 38 || keyPr === 87) {
-            event.preventDefault();
-            dirY = -1; //top arrow subtract 20 from current
-        }
-        else if (keyPr === 40 || keyPr === 83) {
-            event.preventDefault();
-            dirY = 1; //bottom arrow add 20 from current
-        }
-        else if (keyPr === 8) {
-            event.preventDefault();
-            hp = 0;
-        }
-    };
-
-    window.onkeyup = function (event) {
-        dirX = 0;
-        dirY = 0;
     }
 
     let generationRate = 100;
@@ -306,6 +225,83 @@ function load() {
         window.requestAnimationFrame(draw);
     }
     draw();
+}
+
+function generate_garbage() {
+    if (isOver) return;
+    let index = Math.floor(Math.random() * 4);
+    let type = '';
+    if (index === 0) {
+        type = 'household_food_waste';
+    }
+    else if (index === 1) {
+        type = 'residual_waste';
+    }
+    else if (index === 2) {
+        type = 'recyclable_waste';
+    }
+    else {
+        type = 'hazardous_waste';
+    }
+    let temp = garbageTypes[index].length;
+    let subindex = Math.floor(Math.random() * temp);
+    let name = (garbageTypes[index])[subindex];
+
+    let randomX = Math.floor(Math.random() * 451 + 75);
+
+    let randomVelocity = Math.random() * 1.5 + 0.5;
+    let gbg = new garbage(randomX, 0, type, name, randomVelocity); // hard code
+    garbages.push(gbg);
+}
+
+function detectCollision() {
+    var i;
+    for (i = 0; i < garbages.length; i++) {
+        // let gbgX = garbageList[i].getX() + garbageList[i].
+        let currGbg = garbages[i];
+
+        // if (distanceToShip(currGbg.getX(), currGbg.getY()) < 25) {
+        var polygon = [[posX + 46, posY - 15], [posX + 46, posY + 65], [posX + 98, posY + 65], [posX + 98, posY - 15]];
+        if (inside([currGbg.getX(), currGbg.getY()], polygon)) {
+
+            if (currGbg.type === currCollector) {
+                let correct = new Audio("sound/correct.wav");
+                correct.load();
+                correct.play();
+                hp = hp + 100;
+                // delete garbageList[i];
+                // concurrent modification?
+                score++;
+                // console.log(document.getElementById("Score").value);
+            } else {
+                let hitting = new Audio("sound/hitting.wav");
+                hitting.load();
+                hitting.play();
+                if (hp > 60) hp = hp - 60;
+                else hp = 0;
+                skull = currGbg;
+            }
+            garbages.splice(i, 1); // remove garbage from canvas
+        }
+    }
+}
+
+function inside(point, vs) {
+    // ray-casting algorithm based on
+    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+
+    var x = point[0], y = point[1];
+
+    var inside = false;
+    for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+        var xi = vs[i][0], yi = vs[i][1];
+        var xj = vs[j][0], yj = vs[j][1];
+
+        var intersect = ((yi > y) != (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+    }
+
+    return inside;
 }
 
 function start() {
