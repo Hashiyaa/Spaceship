@@ -1,5 +1,5 @@
 let collector_Types = ['household_food_waste','residual_waste','recyclable_waste','hazardous_waste'];
-class spaceship {
+export class spaceship {
     constructor(x, y){
         this.x = x;
         this.y = y;
