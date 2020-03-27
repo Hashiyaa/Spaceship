@@ -1,93 +1,62 @@
 canvas {
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
+    border: 2px solid black; 
+    border-radius: 20px;
     display: block;
     background-image: url("images/background.png");
-    border-radius: 20px;
 }
 
-Button{
-    border: 10px solid;
+button {
+    width: 250px;
+    height: 100px;
+    border: 10px solid orange;
     border-radius: 30px;
-    background-color:rgb(238, 178, 12);
-    width: 250px;
-    height: 110px;
-    position: absolute;
-    left:50%;
-    transform:translate(-50%,-50%);
-    font-size: 40px;
-    border-color:orange;
-    color: rgb(194, 236, 6);
+    background-color: rgb(240, 180, 15);
+    font-size: 30px;
+    color: rgb(200, 240, 0);
 }
 
-#StartButton{
-    top:400px;
+.menu {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 600px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
-#SettingButton{ 
-    top: 480px;
+#main {
+    position: relative;
+    width: 50%;
+    margin: 0 auto;
 }
-#HighestScore{
-    position:absolute;
-    left:50%;
-    transform: translate(-300px,30px);
-    color: indigo;
-    font-family: fantasy;
-}
-#Score{
+
+#energyBar {
     position: absolute;
-    left:50%;
-    transform: translate(-300px,16px);
-    font-family: fantasy;
-    color: rgb(50, 56, 141);
-}
-#Energy{
-    position: absolute;
+    left: 80px;
+    top: 35px;
     height: 10px;
-    width:240px;
-    left: 50%;
-    transform:translate(-100%,-585px);
+    width: 240px;
 }
 
-#Energy_Img{
+#energyIcon {
     position: absolute;
-    left: 50%;
-    transform:translate(-764%,0px);
-    top:180px;
+    left: 30px;
+    top: 30px;
 }
 
-#GameOverStr{
-    position: absolute;
-    font-weight: 600px;
-    left: 50%;
-    top:170px;
+#scoreText {
     font-family: fantasy;
+    font-size: 40px;
     color: yellow;
-    font-size: 90px;
-    transform:translate(-50%,0px);
 }
 
-#AgainButton{
-    top:500px;
-    height: 70px;
-    width: 250px;
-}
-
-#QuitButton{
-    top:600px;
-    height: 70px;
-    width: 250px;
-}
-
-#ScoreText{
-    position: absolute;
-    font-weight: 500;
+#gameOverText {
     font-family: fantasy;
-    left: 50%;
-    top:350px;
+    font-size: 70px;
     color: yellow;
-    font-size: 38px;
-    transform:translate(-50%,0px);
+    margin-top: 90px;
+    margin-bottom: 0px;
 }
