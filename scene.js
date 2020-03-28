@@ -7,30 +7,18 @@ let score = 0;
 let hScore = 0;
 let hp = 3000;
 
-// initial params of spaceship
-let posX = 220;
-let posY = 400;
-let dirX = 0;
-let dirY = 0;
-let speed = 10;
-
 // set up garbage types
 let householdWaste = ['apple', 'bone', 'cheese', 'fish', 'watermelon'];
 let residualWaste = ['cup'];
 let recyclableWaste = ['can', 'soda'];
 let hazardousWaste = ['battery', 'bulb'];
 
-let garbages = [];
-let garbageTypes = [householdWaste, residualWaste, recyclableWaste, hazardousWaste];
-
-// handle skull showing up
-let skull = null;
-let skullTimer = 0;
-
-// set up collectors
-const collectorTypes = ['household_food_waste', 'residual_waste', 'recyclable_waste', 'hazardous_waste'];
-let collectorIndex = 0;
-let collector = collectorTypes[0];
+// initial params of spaceship
+let posX = 300;
+let posY = 450;
+let dirX = 0;
+let dirY = 0;
+let speed = 10;
 
 // event listeners for keyboard
 window.onkeydown = function (event) {
@@ -79,12 +67,17 @@ window.onkeyup = function (event) {
 function removeUI() {
     // remove UI elements
     let UIs = document.getElementsByClassName('UI');
-
     while(UIs[0])
         UIs[0].parentNode.removeChild(UIs[0]);
 }
 
-let panY = 70; // offset of pan relative to spaceship
+// set up collectors
+const collectorTypes = ['household_food_waste', 'residual_waste', 'recyclable_waste', 'hazardous_waste'];
+let collectorIndex = 0;
+let collector = collectorTypes[0];
+
+let panY = 75; // offset of pan relative to spaceship
+
 function drawSpaceship(context, posX, posY, spaceshipImg) {
     if (isOver) return;
     context.save();
@@ -92,13 +85,21 @@ function drawSpaceship(context, posX, posY, spaceshipImg) {
     panImg.src = "images/dustpan.png";
     let typeImg = new Image();
     typeImg.src = 'images/'.concat(collector, '.png');
-    let typeY = 85; // offset of pan relative to spaceship
+    let typeY = panY + 12; // offset of pan relative to spaceship
     context.drawImage(panImg, posX - panImg.width * 0.5, posY - panY - panImg.height * 0.5);
-    context.drawImage(typeImg, posX - typeImg.width * 0.5, posY - typeY - typeImg.height * 0.5);
     context.drawImage(spaceshipImg, posX - spaceshipImg.width * 0.5, posY - spaceshipImg.height * 0.5);
+    context.drawImage(typeImg, posX - typeImg.width * 0.5, posY - typeY - typeImg.height * 0.5);
     // drawRefDot(context, posX, posY);
     context.restore();
 }
+
+let garbages = [];
+let garbageTypes = [householdWaste, residualWaste, recyclableWaste, hazardousWaste];
+
+// handle skull showing up
+let skull = null;
+let skullTimer = 0;
+let skullRate = 50;
 
 function detectCollision() {
     let panImg = new Image();
@@ -196,18 +197,39 @@ function drawRefDot(context, posX, posY) {
 let div = document.getElementById("main");
 let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
 
+let buttonW = 250;
+let buttonH = 100;
+function loadMenuScene() {
+    removeUI();
+
+    let startMenu = document.createElement("div");
+    startMenu.className = "menu UI";
+
+    // Create Buttons
+    let startButton = document.createElement("button");
+    startButton.id = "startButton";
+    startButton.className = "rectButton";
+    startButton.style.left = (0.5 * (canvas.width - buttonW)).toString() + "px";
+    startButton.style.top = (0.5 * (canvas.height - buttonH)).toString() + "px";
+    startButton.innerHTML = "START";
+    startButton.onclick = loadGameScene;
+    startMenu.appendChild(startButton);
+
+    div.appendChild(startMenu);
+}
+
 function loadGameScene() {
     // remove UI elements
     removeUI();
-
-    // play music
-    let audio = /** @type {HTMLAudioElement} */ (document.getElementById("music"));
-    audio.play();
 
     // reset some global variables
     hp = 3000;
     isOver = false;
     score = 0;
+
+    // reset the position of spaceship
+    posX = 300;
+    posY = 450;
 
     // set up the canvas
     let context = canvas.getContext("2d");
@@ -230,6 +252,8 @@ function loadGameScene() {
     spaceshipImg.src = 'images/spaceship.png'; // Set source path
 
     let garbageRate = 100;
+    let clock = 0;
+    let offset = Date.now();
     function draw() {
         if (isOver) return;
 
@@ -254,7 +278,6 @@ function loadGameScene() {
         // check for collision between spaceship and garbage constantly
         detectCollision();
         // draw the skull if hit
-        let skullRate = 50;
         if (skull) {
             if (skullTimer < skullRate) {
                 let skullImg = new Image();
@@ -297,13 +320,22 @@ function loadGameScene() {
         context.fillText("Collector type now: " + collectorInfo, 290, 580);
         context.fillText("Score: " + score, 80, 25);
         context.fillText("Highest score: " + hScore, 180, 25);
-        context.fillText("Energy remaining", 120, 70);
+        context.fillText("Energy remaining: " + hp, 110, 70);
+
+        clock += (Date.now() - offset) / 1000;
+        let second = Math.floor(clock % 60).toString();
+        if ((Number(second) < 10)) second = '0' + second;
+        let minute = Math.floor(clock / 60).toString();
+        if ((Number(minute) < 10)) minute = '0' + minute;
+        console.log(second);
+        context.fillText("Time: " + minute + " : " + second, 420, 43);
+        offset = Date.now();
         context.restore();
         // update hp and energy bar
         if (hp > 0) {
             hp--;
         } else {
-            gameover();
+            loadGameoverScene();
         }
         energyBar.value = hp;
 
@@ -313,30 +345,11 @@ function loadGameScene() {
     draw();
 }
 
-let buttonW = 250;
-let buttonH = 100;
-function loadMenuScene() {
-    removeUI();
-    
-    let startMenu = document.createElement("div");
-    startMenu.className = "menu UI";
-
-    // Create Buttons
-    let startButton = document.createElement("button");
-    startButton.id = "startButton";
-    startButton.style.left = (0.5 * (canvas.width - buttonW)).toString() + "px";
-    startButton.style.top = (0.5 * (canvas.height - buttonH)).toString() + "px";
-    startButton.innerHTML = "START";
-    startButton.onclick = loadGameScene;
-    startMenu.appendChild(startButton);
-
-    div.appendChild(startMenu);
-}
-
-function gameover() {
+function loadGameoverScene() {
     removeUI();
 
     isOver = true;
+    skullTimer = skullRate;
     garbages = [];
 
     let context = canvas.getContext("2d");
@@ -357,6 +370,7 @@ function gameover() {
 
     let tryAgainButton = document.createElement("button");
     tryAgainButton.id = "tryAgainButton";
+    tryAgainButton.className = "rectButton";
     tryAgainButton.innerHTML = "TRY AGAIN";
     tryAgainButton.style.marginBottom = "50px";
     tryAgainButton.onclick = loadGameScene;
@@ -364,6 +378,7 @@ function gameover() {
 
     let quitButton = document.createElement("button");
     quitButton.id = "quitButton";
+    quitButton.className = "rectButton";
     quitButton.innerHTML = "QUIT";
     quitButton.style.marginBottom = "50px";
     quitButton.onclick = loadMenuScene;
@@ -372,4 +387,21 @@ function gameover() {
     div.appendChild(gameoverMenu);
 }
 
-window.onload = loadMenuScene;
+window.onload = function() {
+    let audioButton = document.createElement("button");
+    audioButton.id = "audioButton";
+
+    let audio = /** @type {HTMLAudioElement} */ (document.getElementById("music"));
+    audio.play();
+    audioButton.onclick = function() {
+        if (audio.muted) {
+            audio.muted = false;
+            audioButton.style.backgroundImage = "url('images/audio.png')";
+        } else {
+            audio.muted = true;
+            audioButton.style.backgroundImage = "url('images/mute.png')";
+        }
+    };
+    div.appendChild(audioButton);
+    loadMenuScene();
+};
