@@ -390,6 +390,7 @@ function loadGameoverScene() {
 window.onload = function() {
     let audioButton = document.createElement("button");
     audioButton.id = "audioButton";
+    audioButton.style.backgroundImage = "url('images/audio.png')";
 
     let audio = /** @type {HTMLAudioElement} */ (document.getElementById("music"));
     audio.play();
