@@ -97,9 +97,13 @@ let garbages = [];
 let garbageTypes = [householdWaste, residualWaste, recyclableWaste, hazardousWaste];
 
 // handle skull showing up
-let skull = null;
+let skull;
 let skullTimer = 0;
 let skullRate = 50;
+// handle prompt message
+let scoreMsg;
+let scoreMsgTimer = 0;
+let scoreMsgRate = 50;
 
 function detectCollision() {
     let panImg = new Image();
@@ -117,12 +121,14 @@ function detectCollision() {
                 let hit = new Audio("sound/correct.wav");
                 hit.load();
                 hit.play();
+                scoreMsg = "+100";
                 hp = hp + 100; // 100 hp award for collecting the correct garbage
                 score++;
             } else {
                 let miss = new Audio("sound/hitting.wav");
                 miss.load();
                 miss.play();
+                scoreMsg = "-50";
                 if (hp > 50) {
                     hp -= 50; // 50 hp penalty for hitting the wrong garbage
                 } else {
@@ -291,6 +297,7 @@ function loadGameScene() {
             }
         }
 
+
         ////////// garbage section //////////
         garbageTimer++;
         if (garbageTimer >= garbageRate) {
@@ -321,6 +328,16 @@ function loadGameScene() {
         context.fillText("Score: " + score, 80, 25);
         context.fillText("Highest score: " + hScore, 180, 25);
         context.fillText("Energy remaining: " + hp, 110, 70);
+
+        if (scoreMsg) {
+            if (scoreMsgTimer < scoreMsgRate) {
+                context.fillText(scoreMsg, 300, 70);
+                scoreMsgTimer++;
+            } else {
+                scoreMsg = null;
+                scoreMsgTimer = 0;
+            }
+        }
 
         clock += (Date.now() - offset) / 1000;
         let second = Math.floor(clock % 60).toString();
