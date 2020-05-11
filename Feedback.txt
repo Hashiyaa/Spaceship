@@ -1,0 +1,5 @@
+For the garbage collection game, what if you are a little sneakier about the lesson?  Rather than just going for highscore, have a story about them cleaning up from a battlefield or making deliveries. Instead of having the garbage collection be something the game tells them to do, make it something the player wants to do to gain advantages in the game.
+
+Collecting garbage requires switching to the right bin, but each type of garbage gives a different bonus. One replenishes fuel, another replenishes ammo (or speed boosts if you want to avoid having combat in the game), another gives xp or builds towards upgrades, etc.
+
+Those are good tricks to reduce time-to-fun! As you make more games, watch your playtesters and see how long it takes them to have fun - what is happening during that 'pre-fun' time and how can you reduce it?
