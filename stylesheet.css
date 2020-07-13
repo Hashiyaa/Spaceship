@@ -1,5 +1,5 @@
 canvas {
-    border: 2px solid black; 
+    border: 2px solid black;
     border-radius: 20px;
     display: block;
     background-image: url("images/background.png");
@@ -53,6 +53,20 @@ canvas {
     color: rgb(200, 240, 0);
 }
 
+.button {
+    position: absolute;
+    left: 840px;
+    top: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: #FFF0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+    z-index: 1;
+}
+
 .paragraph {
     white-space: pre-line;
     font-family: Arial;
@@ -79,20 +93,6 @@ canvas {
     line-height: 20px;
 }
 
-#audioButton {
-    position: absolute;
-    left: 840px;
-    top: 20px;
-    width: 40px;
-    height: 40px;
-    background-color: #FFF0;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border: none;
-    z-index: 1;
-}
-
 #energyBar {
     position: absolute;
     left: 80px;
@@ -105,6 +105,14 @@ canvas {
     position: absolute;
     left: 30px;
     top: 30px;
+}
+
+#pauseText {
+    font-family: Impact;
+    font-size: 60px;
+    color: yellow;
+    line-height: 20px;
+    margin-top: 180px;
 }
 
 #scoreText {

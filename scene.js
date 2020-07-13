@@ -6,6 +6,7 @@ const HP_GAIN = 100;
 const HP_LOSS = 50;
 
 let isOver = false;
+let isPlaying = false;
 let playBGM = false;
 let score = 0;
 let hScore = 0;
@@ -27,7 +28,9 @@ let panY = 75;
 
 //////////////////// UI settings ////////////////////
 let div = document.getElementById("main");
+// set up the canvas
 let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
+let context = canvas.getContext("2d");
 
 // handle prompt message
 let scoreMsg;
@@ -63,6 +66,7 @@ skullImg.src = "images/skull.png";
 window.onload = function () {
     let audioButton = document.createElement("button");
     audioButton.id = "audioButton";
+    audioButton.className = "button";
     audioButton.style.backgroundImage = "url('images/mute.png')";
 
     let bgm = /** @type {HTMLAudioElement} */ (document.getElementById("music"));
@@ -86,38 +90,35 @@ window.onload = function () {
 
 //////////////////// callback functions ////////////////////
 window.onkeydown = function (event) {
-    var key = event.keyCode; //Key code of key pressed
+    event.preventDefault();
+    if (isPlaying) {
+        let key = event.keyCode; //Key code of key pressed
 
-    // white space
-    if (key === 32) {
-        event.preventDefault();
-        collectorIndex = ((collectorIndex + 1) % COLLECTOR_TYPES.length);
-    }
-
-    // right arrow or d
-    if (key === 39 || key === 68) {
-        event.preventDefault();
-        dirX = 1;
-    }
-    // left arrow or a
-    else if (key === 37 || key === 65) {
-        event.preventDefault();
-        dirX = -1;
-    }
-    // top arrow or w
-    else if (key === 38 || key === 87) {
-        event.preventDefault();
-        dirY = -1;
-    }
-    // down arrow of s
-    else if (key === 40 || key === 83) {
-        event.preventDefault();
-        dirY = 1;
-    }
-    // delete or backspace, for debug use
-    else if (key === 8) {
-        event.preventDefault();
-        hp = 0;
+        // white space
+        if (key === 32) {
+            collectorIndex = ((collectorIndex + 1) % COLLECTOR_TYPES.length);
+        }
+    
+        // right arrow or d
+        if (key === 39 || key === 68) {
+            dirX = 1;
+        }
+        // left arrow or a
+        else if (key === 37 || key === 65) {
+            dirX = -1;
+        }
+        // top arrow or w
+        else if (key === 38 || key === 87) {
+            dirY = -1;
+        }
+        // down arrow of s
+        else if (key === 40 || key === 83) {
+            dirY = 1;
+        }
+        // delete or backspace, for debug use
+        else if (key === 8) {
+            hp = 0;
+        }
     }
 };
 
@@ -137,6 +138,7 @@ function removeUI() {
 
 function loadMenuScene() {
     removeUI();
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     let startMenu = document.createElement("div");
     startMenu.className = "menu UI";
@@ -267,19 +269,67 @@ function loadHelpScene() {
 function loadGameScene() {
     // remove UI elements
     removeUI();
+    
+    let pauseMenu = document.createElement("div");
+    pauseMenu.className = "menu UI";
+    pauseMenu.style.display = "none";
+
+    let pausetext = document.createElement("p");
+    pausetext.id = "pauseText";
+    pausetext.innerHTML = "PAUSING...";
+
+    pauseMenu.appendChild(pausetext);
+
+    let resumeButton = document.createElement("button");
+    resumeButton.id = "resumeButton";
+    resumeButton.className = "rectButton";
+    resumeButton.innerHTML = "RESUME";
+    resumeButton.style.marginTop = "50px";
+    resumeButton.onclick = function () {
+        isPlaying = true;
+        pauseMenu.style.display = "none";
+    };
+    pauseMenu.appendChild(resumeButton);
+
+    let quitButton = document.createElement("button");
+    quitButton.id = "quitButton";
+    quitButton.className = "rectButton";
+    quitButton.innerHTML = "QUIT";
+    quitButton.style.marginTop = "50px";
+    quitButton.onclick = function () {
+        isOver = true;
+        loadMenuScene();
+    };
+    pauseMenu.appendChild(quitButton);
+
+    div.appendChild(pauseMenu);
+
+    let pauseButton = document.createElement("button");
+    pauseButton.id = "pauseButton";
+    pauseButton.className = "button UI";
+    pauseButton.style.left = "790px";
+    pauseButton.style.backgroundImage = "url(images/pause.png)";
+    pauseButton.onclick = function () {
+        if (isPlaying) {
+            pauseMenu.style.display = "flex";
+        } else {
+            pauseMenu.style.display = "none";
+        }
+        isPlaying = !isPlaying;
+    };
+    div.appendChild(pauseButton);
 
     // reset some global variables
     hp = MAX_HP;
     isOver = false;
+    isPlaying = true;
     score = 0;
 
-    // reset the position of spaceship
     posX = canvas.width / 2;
     posY = canvas.height - 150;
-    collectorIndex = 0
+    collectorIndex = 0;
 
-    // set up the canvas
-    let context = canvas.getContext("2d");
+    garbages = [];
 
     let energyBar = document.createElement("progress");
     energyBar.id = "energyBar";
@@ -300,99 +350,101 @@ function loadGameScene() {
     function draw() {
         if (isOver) return;
 
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.save();
+        if (isPlaying) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.save();
 
-        ////////// spaceship section //////////
-        drawSpaceship(context, posX, posY, spaceshipImg);
-        // set bounds
-        let leftBound = 20;
-        let rightBound = canvas.width - 20;
-        let upperBound = 200;
-        let lowerBound = canvas.height - 50;
-        // update the position
-        if ((posX >= leftBound && dirX < 0) || (posX <= rightBound && dirX > 0)) {
-            posX += dirX * speed;
-        }
-        if ((posY >= upperBound && dirY < 0) || (posY <= lowerBound && dirY > 0)) {
-            posY += dirY * speed;
-        }
-        // console.log("x: " + posX + " y: " + posY);
-        // check for collision between spaceship and garbage constantly
-        detectCollision();
-        // draw the skull if hit
-        if (skull) {
-            if (skullTimer < skullRate) {
-
-                context.drawImage(skullImg, skull.posX - 0.5 * skullImg.width,
-                    skull.posY - 0.5 * skullImg.height);
-                skullTimer++;
-            } else {
-                skull = null;
-                skullTimer = 0;
+            ////////// spaceship section //////////
+            drawSpaceship(posX, posY, spaceshipImg);
+            // set bounds
+            let leftBound = 20;
+            let rightBound = canvas.width - 20;
+            let upperBound = 200;
+            let lowerBound = canvas.height - 50;
+            // update the position
+            if ((posX >= leftBound && dirX < 0) || (posX <= rightBound && dirX > 0)) {
+                posX += dirX * speed;
             }
-        }
-
-        ////////// garbage section //////////
-        garbageTimer++;
-        if (garbageTimer >= garbageRate) {
-            generateGarbage();
-            garbageTimer = 0;
-        }
-        // update the position of garbages
-        for (let i = 0; i < garbages.length; i++) {
-            let g = garbages[i];
-            context.drawImage(g.Img, g.posX - g.Img.width * 0.5, g.posY - g.Img.height * 0.5);
-            if (g.posY > canvas.height) {
-                garbages.splice(i, 1);
-                i--;
-            } else {
-                g.posY += g.v;
+            if ((posY >= upperBound && dirY < 0) || (posY <= lowerBound && dirY > 0)) {
+                posY += dirY * speed;
             }
-        }
+            // console.log("x: " + posX + " y: " + posY);
+            // check for collision between spaceship and garbage constantly
+            detectCollision();
+            // draw the skull if hit
+            if (skull) {
+                if (skullTimer < skullRate) {
 
-        ////////// UI section //////////
-        // update highest score
-        if (score > hScore) hScore = score;
-        // draw texts
-        context.save();
-        context.fillStyle = "white";
-        let collectorWords = COLLECTOR_TYPES[collectorIndex].split("_");
-        let collectorInfo = collectorWords.join(" ");
-        context.font = "16px Georgia";
-        context.fillText("Collector type now: " + collectorInfo, canvas.width - 300, 580);
-        context.fillText("Score: " + score, 80, 25);
-        context.fillText("Highest score: " + hScore, 180, 25);
-        context.fillText("Energy remaining: " + hp, 110, 70);
-
-        if (scoreMsg) {
-            if (scoreMsgTimer < scoreMsgRate) {
-                context.fillText(scoreMsg, 300, 70);
-                scoreMsgTimer++;
-            } else {
-                scoreMsg = null;
-                scoreMsgTimer = 0;
+                    context.drawImage(skullImg, skull.posX - 0.5 * skullImg.width,
+                        skull.posY - 0.5 * skullImg.height);
+                    skullTimer++;
+                } else {
+                    skull = null;
+                    skullTimer = 0;
+                }
             }
+
+            ////////// garbage section //////////
+            garbageTimer++;
+            if (garbageTimer >= garbageRate) {
+                generateGarbage();
+                garbageTimer = 0;
+            }
+            // update the position of garbages
+            for (let i = 0; i < garbages.length; i++) {
+                let g = garbages[i];
+                context.drawImage(g.Img, g.posX - g.Img.width * 0.5, g.posY - g.Img.height * 0.5);
+                if (g.posY > canvas.height) {
+                    garbages.splice(i, 1);
+                    i--;
+                } else {
+                    g.posY += g.v;
+                }
+            }
+
+            ////////// UI section //////////
+            // draw texts
+            context.save();
+            context.fillStyle = "white";
+            let collectorWords = COLLECTOR_TYPES[collectorIndex].split("_");
+            let collectorInfo = collectorWords.join(" ");
+            context.font = "16px Georgia";
+            context.fillText("Collector type now: " + collectorInfo, canvas.width - 300, 580);
+            context.fillText("Score: " + score, 80, 25);
+            context.fillText("Highest score: " + hScore, 180, 25);
+            context.fillText("Energy remaining: " + hp, 110, 70);
+
+            if (scoreMsg) {
+                if (scoreMsgTimer < scoreMsgRate) {
+                    context.fillText(scoreMsg, 300, 70);
+                    scoreMsgTimer++;
+                } else {
+                    scoreMsg = null;
+                    scoreMsgTimer = 0;
+                }
+            }
+
+            clock += (Date.now() - offset) / 1000;
+            let second = Math.floor(clock % 60).toString();
+            if ((Number(second) < 10)) second = '0' + second;
+            let minute = Math.floor(clock / 60).toString();
+            if ((Number(minute) < 10)) minute = '0' + minute;
+            // console.log(second);
+            context.fillText("Time: " + minute + " : " + second, canvas.width - 220, 43);
+            
+            context.restore();
+            // update hp and energy bar
+            if (hp > 0) {
+                hp--;
+            } else {
+                loadGameoverScene(minute, second);
+            }
+            energyBar.value = hp;
+
+            context.restore();
         }
 
-        clock += (Date.now() - offset) / 1000;
-        let second = Math.floor(clock % 60).toString();
-        if ((Number(second) < 10)) second = '0' + second;
-        let minute = Math.floor(clock / 60).toString();
-        if ((Number(minute) < 10)) minute = '0' + minute;
-        // console.log(second);
-        context.fillText("Time: " + minute + " : " + second, canvas.width - 180, 43);
         offset = Date.now();
-        context.restore();
-        // update hp and energy bar
-        if (hp > 0) {
-            hp--;
-        } else {
-            loadGameoverScene(minute, second);
-        }
-        energyBar.value = hp;
-
-        context.restore();
         window.requestAnimationFrame(draw);
     }
     draw();
@@ -402,10 +454,12 @@ function loadGameoverScene(minute, second) {
     removeUI();
 
     isOver = true;
+    isPlaying = false;
     skullTimer = skullRate;
-    garbages = [];
 
-    let context = canvas.getContext("2d");
+    // update highest score
+    if (score > hScore) hScore = score;
+
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     let gameoverMenu = document.createElement("div");
@@ -441,7 +495,7 @@ function loadGameoverScene(minute, second) {
 }
 
 //////////////////// drawing functions ////////////////////
-function drawSpaceship(context, posX, posY, spaceshipImg) {
+function drawSpaceship(posX, posY, spaceshipImg) {
     context.save();
     typeImg.src = 'images/'.concat(COLLECTOR_TYPES[collectorIndex], '.png');
     let typeY = panY + 12; // offset of pan relative to spaceship
@@ -452,7 +506,7 @@ function drawSpaceship(context, posX, posY, spaceshipImg) {
     context.restore();
 }
 
-function drawRefDot(context, posX, posY) {
+function drawRefDot(posX, posY) {
     context.save();
     context.beginPath();
     context.arc(posX, posY, 10, 0, Math.PI * 2);
