@@ -14,20 +14,46 @@ canvas {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+}
+
+.box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-around;
+    margin-top: 50px;
+}
+
+.title {
+    font-family: fantasy;
+    font-size: 70px;
+    color: yellow;
+    line-height: 0px;
+    margin-top: 120px;
+}
+
+.subtitle {
+    position: relative;
+    left: 150px;
+    font-family: fantasy;
+    font-size: 30px;
+    font-style: oblique;
+    color: yellow;
+    line-height: 20px;
 }
 
 .rectButton {
-    width: 250px;
-    height: 80px;
+    width: 220px;
+    height: 75px;
     border: 10px solid orange;
     border-radius: 20px;
     background-color: rgb(240, 180, 15);
-    font-size: 30px;
+    font-size: 28px;
     color: rgb(200, 240, 0);
 }
 
-#instructionText {
+.paragraph {
     white-space: pre-line;
     font-family: Arial;
     font-style: italic;
@@ -44,6 +70,13 @@ canvas {
     position: relative;
     width: 900px;
     margin: 0 auto;
+}
+
+#instructionText {
+    font-family: fantasy;
+    font-size: 30px;
+    color: yellow;
+    line-height: 20px;
 }
 
 #audioButton {
@@ -74,17 +107,10 @@ canvas {
     top: 30px;
 }
 
-#gameOverText {
-    font-family: fantasy;
-    font-size: 70px;
-    color: yellow;
-    margin-top: 120px;
-    margin-bottom: 0px;
-}
-
 #scoreText {
     font-family: fantasy;
     font-size: 40px;
     color: yellow;
+    line-height: 20px;
+    margin-bottom: 70px;
 }
-

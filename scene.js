@@ -29,9 +29,6 @@ let panY = 75;
 let div = document.getElementById("main");
 let canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("canvas"));
 
-let buttonW = 250;
-let buttonH = 100;
-
 // handle prompt message
 let scoreMsg;
 let scoreMsgTimer = 0;
@@ -144,17 +141,127 @@ function loadMenuScene() {
     let startMenu = document.createElement("div");
     startMenu.className = "menu UI";
 
+    let title = document.createElement("p");
+    title.className = "title";
+    title.innerHTML = "Spaceship";
+    startMenu.appendChild(title);
+
+    let subtitle = document.createElement("p");
+    subtitle.className = "subtitle";
+    subtitle.innerHTML = "The Garbage Collector";
+    startMenu.appendChild(subtitle);
+
     // Create Buttons
     let startButton = document.createElement("button");
     startButton.id = "startButton";
     startButton.className = "rectButton";
-    startButton.style.left = (0.5 * (canvas.width - buttonW)).toString() + "px";
-    startButton.style.top = (0.5 * (canvas.height - buttonH)).toString() + "px";
     startButton.innerHTML = "START";
+    startButton.style.marginTop = "20px";
     startButton.onclick = loadGameScene;
     startMenu.appendChild(startButton);
 
+    let storyButton = document.createElement("button");
+    storyButton.id = "storyButton";
+    storyButton.className = "rectButton";
+    storyButton.innerHTML = "STORY";
+    storyButton.style.marginTop = "20px";
+    storyButton.onclick = loadStoryScene;
+    startMenu.appendChild(storyButton);
+
+    let helpButton = document.createElement("button");
+    helpButton.id = "helpButton";
+    helpButton.className = "rectButton";
+    helpButton.innerHTML = "HELP";
+    helpButton.style.marginTop = "20px";
+    helpButton.onclick = loadHelpScene;
+    startMenu.appendChild(helpButton);
+
     div.appendChild(startMenu);
+}
+
+function loadStoryScene() {
+    removeUI();
+    let storyMenu = document.createElement("div");
+    storyMenu.className = "menu UI";
+
+    let storyText = document.createElement("p");
+    storyText.className = "paragraph";
+    storyText.innerHTML = "";
+    storyMenu.appendChild(storyText);
+
+    // Create Buttons
+    let backButton = document.createElement("button");
+    backButton.id = "backButton";
+    backButton.className = "rectButton";
+    backButton.innerHTML = "BACK";
+    backButton.style.marginTop = "30px";
+    backButton.onclick = loadMenuScene;
+
+    storyMenu.appendChild(backButton);
+
+    div.appendChild(storyMenu);
+}
+
+function loadHelpScene() {
+    removeUI();
+    let helpMenu = document.createElement("div");
+    helpMenu.className = "menu UI";
+
+    let movementBox = document.createElement("div");
+    movementBox.className = "box";
+
+    let WASDKeyImg = document.createElement("img");
+    WASDKeyImg.src = "images/WASD.png";
+    movementBox.appendChild(WASDKeyImg);
+
+    let orText = document.createElement("p");
+    orText.id = "instructionText";
+    orText.innerHTML = "&nbsp OR &nbsp";
+    movementBox.appendChild(orText);
+
+    let ArrowKeyImg = document.createElement("img");
+    ArrowKeyImg.src = "images/arrow_keys.png";
+    movementBox.appendChild(ArrowKeyImg);
+
+    let movementText = document.createElement("p");
+    movementText.id = "instructionText";
+    movementText.innerHTML = "&nbsp to control the spaceship";
+    movementBox.appendChild(movementText);
+
+    helpMenu.appendChild(movementBox);
+
+    let spaceBox = document.createElement("div");
+    spaceBox.className = "box";
+
+    let spaceKeyImg = document.createElement("img");
+    spaceKeyImg.src = "images/space_key.png";
+    spaceBox.appendChild(spaceKeyImg);
+
+    let spaceText = document.createElement("p");
+    spaceText.id = "instructionText";
+    spaceText.innerHTML = "&nbsp to switch the type of your garbage collector";
+    spaceBox.appendChild(spaceText);
+
+    helpMenu.appendChild(spaceBox);
+
+    let promptText = document.createElement("p");
+    promptText.id = "instructionText";
+    promptText.innerHTML = "Use the correct collector to recycle garbage \nand power your spaceship!";
+    promptText.style.lineHeight = "50px";
+    promptText.style.whiteSpace = "pre-wrap";
+    helpMenu.appendChild(promptText);
+
+    // Create Buttons
+    let backButton = document.createElement("button");
+    backButton.id = "backButton";
+    backButton.className = "rectButton";
+    backButton.innerHTML = "BACK";
+    backButton.style.marginTop = "30px";
+    backButton.onclick = loadMenuScene;
+
+    helpMenu.appendChild(backButton);
+
+    div.appendChild(helpMenu);
 }
 
 function loadGameScene() {
@@ -186,7 +293,6 @@ function loadGameScene() {
     energyIcon.className = "UI";
     energyIcon.src = "images/energy.png";
     div.appendChild(energyIcon);
-
 
     let clock = 0;
     let offset = Date.now();
@@ -282,7 +388,7 @@ function loadGameScene() {
         if (hp > 0) {
             hp--;
         } else {
-            loadGameoverScene();
+            loadGameoverScene(minute, second);
         }
         energyBar.value = hp;
 
@@ -292,7 +398,7 @@ function loadGameScene() {
     draw();
 }
 
-function loadGameoverScene() {
+function loadGameoverScene(minute, second) {
     removeUI();
 
     isOver = true;
@@ -306,13 +412,13 @@ function loadGameoverScene() {
     gameoverMenu.className = "menu UI";
 
     let gameoverText = document.createElement("p");
-    gameoverText.id = "gameOverText";
+    gameoverText.className = "title";
     gameoverText.innerHTML = "GAME OVER";
     gameoverMenu.appendChild(gameoverText);
 
     let scoreText = document.createElement("p");
     scoreText.id = "scoreText";
-    scoreText.innerHTML = "Score: " + score;
+    scoreText.innerHTML = "Time: " + minute + " : " + second + "&nbsp &nbsp &nbsp Score: " + score;
     gameoverMenu.appendChild(scoreText);
 
     let tryAgainButton = document.createElement("button");
